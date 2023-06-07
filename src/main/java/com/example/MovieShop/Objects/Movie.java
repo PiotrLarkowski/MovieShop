@@ -17,6 +17,9 @@ import java.util.List;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ManyToOne
+    @JoinColumn(name="movieListActorAppeared")
+    @JoinColumn(name="listOfPurchasedMovies")
     private Long movieId;
     @OneToMany
     private List<Actor> listOfActorsInMovie;
