@@ -2,18 +2,18 @@ package com.example.MovieShop.Objects;
 
 import com.example.MovieShop.MoviesGenres;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
