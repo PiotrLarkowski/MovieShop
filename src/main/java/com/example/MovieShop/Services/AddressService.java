@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.MovieShop.Objects.Address;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Service
 @Transactional
@@ -32,5 +35,19 @@ public class AddressService{
                 .orElseThrow(() -> new AddressNotFoundException(id));
         address.setCity(address.getCity());
         address.setStreet(addressDto.getStreet());
+    }
+    public List<Address> getAllAddress(){
+        ArrayList<Address> addressList = new ArrayList<>();
+        addressRepository.findAll().forEach(address -> addressList.add(address));
+        return addressList;
+    }
+    public Address getAddress(long id){
+        return addressRepository.findById(id)
+                .orElseThrow(() -> new AddressNotFoundException(id));
+    }
+    public void deleteAddress(long id){
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new AddressNotFoundException(id));
+        addressRepository.delete(address);
     }
 }
