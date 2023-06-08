@@ -1,6 +1,6 @@
 package com.example.MovieShop.Services;
 
-import com.example.MovieShop.Exceptions.AddressNotFoundException;
+import com.example.MovieShop.Exceptions.Address.AddressNotFoundException;
 import com.example.MovieShop.ObjectsDto.AddressDto;
 import com.example.MovieShop.Repositorys.AddressRepository;
 import lombok.extern.slf4j.Slf4j;

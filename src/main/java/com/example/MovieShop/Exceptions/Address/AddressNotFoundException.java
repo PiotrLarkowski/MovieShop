@@ -1,4 +1,4 @@
-package com.example.MovieShop.Exceptions;
+package com.example.MovieShop.Exceptions.Address;
 
 public class AddressNotFoundException extends RuntimeException{
     public AddressNotFoundException(long id){

@@ -1,0 +1,16 @@
+package com.example.MovieShop.Exceptions.Movie;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+@ControllerAdvice
+public class MovieNotFoundAdvice{
+    @ResponseBody
+    @ExceptionHandler(MovieNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public HttpStatus movieNotFoundHandler(){
+        return HttpStatus.NOT_FOUND;
+    }
+}
