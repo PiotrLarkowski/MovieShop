@@ -1,7 +1,6 @@
 package com.example.MovieShop.Objects;
 
 import jakarta.persistence.*;
-import jakarta.persistence.GenerationType;
 import lombok.*;
 
 @Entity
@@ -12,10 +11,14 @@ import lombok.*;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Address {
+public class MovieRent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long addressId;
-    private String city;
-    private String street;
+    private Long movieRentalId;
+    @ManyToOne
+    @JoinColumn(name = "clientId")
+    private Client clientRentId;
+    @ManyToOne
+    @JoinColumn(name = "foreignMovieId")
+    private Movie movieRentId;
 }

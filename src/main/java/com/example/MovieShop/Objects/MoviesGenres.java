@@ -1,4 +1,4 @@
-package com.example.MovieShop;
+package com.example.MovieShop.Objects;
 
 public enum MoviesGenres {
     COMEDY,

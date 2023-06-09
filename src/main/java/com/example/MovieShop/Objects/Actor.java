@@ -16,12 +16,12 @@ import java.util.List;
 public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ManyToOne
-    @JoinColumn(name="actorId")
-    private long actorId;
+    private Long actorId;
+    @OneToMany(mappedBy = "foreignMovieId")
+    private Long foreignActorId;
     private String actorFirstName;
     private String actorLastName;
     private String description;
-    @OneToMany
+    @OneToMany(mappedBy = "foreignMovieId")
     private List<Movie> movieListActorAppeared;
 }

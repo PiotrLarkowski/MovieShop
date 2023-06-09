@@ -18,8 +18,9 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clientId;
     private int countOfBuy;
-    @OneToMany
-    private List<Movie> listOfPurchasedMovies;
     private String clientFirstName;
     private String clientLastName;
+    @OneToMany(mappedBy="clientRentId")
+    private List<Movie> listOfMoviesRentByClient;
+
 }
