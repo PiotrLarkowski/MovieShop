@@ -27,6 +27,7 @@ public class AddressService{
                 .city(addressDto.getCity())
                 .street(addressDto.getStreet())
                 .build();
+        log.info("Address has been created");
         addressRepository.save(address);
         return address;
     }
@@ -35,19 +36,23 @@ public class AddressService{
                 .orElseThrow(() -> new AddressNotFoundException(id));
         address.setCity(address.getCity());
         address.setStreet(addressDto.getStreet());
+        log.info("Address has been updated");
     }
     public List<Address> getAllAddress(){
         ArrayList<Address> addressList = new ArrayList<>();
         addressRepository.findAll().forEach(address -> addressList.add(address));
+        log.info("Returning Addresses list");
         return addressList;
     }
     public Address getAddress(long id){
+        log.info("Returning address by id: "+id);
         return addressRepository.findById(id)
                 .orElseThrow(() -> new AddressNotFoundException(id));
     }
     public void deleteAddress(long id){
         Address address = addressRepository.findById(id)
                 .orElseThrow(() -> new AddressNotFoundException(id));
+        log.info("Deleting Address by id: "+id);
         addressRepository.delete(address);
     }
 }
