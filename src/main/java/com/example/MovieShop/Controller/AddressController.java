@@ -21,4 +21,10 @@ public class AddressController {
     public Address createAddress(@RequestBody @Validated AddressDto addressDto) throws Exception{
         return addressService.createAddress(addressDto);
     }
+
+    @PutMapping(path = "/{id}")
+    public void updateAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
+        addressService.updateAddress(addressDto, id);
+    }
+
 }
