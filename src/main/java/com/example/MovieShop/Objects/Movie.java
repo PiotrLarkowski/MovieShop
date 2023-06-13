@@ -17,11 +17,8 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieId;
-    @ManyToOne
-    @JoinColumn(name="foreignActorId")
     private Long foreignMovieId;
-    @ManyToOne
-    @JoinColumn(name="foreignActorId")
+    @OneToMany(mappedBy = "foreignActorId")
     private List<Actor> listOfActorsInMovie;
     private String title;
     private String review;

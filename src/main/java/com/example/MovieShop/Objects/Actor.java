@@ -17,7 +17,6 @@ public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long actorId;
-    @OneToMany(mappedBy = "foreignMovieId")
     private Long foreignActorId;
     private String actorFirstName;
     private String actorLastName;
