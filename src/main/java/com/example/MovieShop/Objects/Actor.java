@@ -21,6 +21,6 @@ public class Actor {
     private String actorFirstName;
     private String actorLastName;
     private String description;
-    @OneToMany(mappedBy = "foreignMovieId")
+//    @OneToMany(mappedBy = "foreignMovieId")
     private List<Movie> movieListActorAppeared;
 }

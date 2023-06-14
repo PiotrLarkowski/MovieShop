@@ -26,6 +26,7 @@ public class ActorService {
     @PostMapping
     public Actor createNewActor(@RequestBody @Validated ActorDto actorDto, @PathVariable Long id){
         Actor actor = Actor.builder()
+                .actorId(id)
                 .actorFirstName(actorDto.getActorFirstName())
                 .actorLastName(actorDto.getActorLastName())
                 .description(actorDto.getDescription())

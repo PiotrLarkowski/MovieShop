@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+//@Getter
 @Setter
 @ToString
 @EqualsAndHashCode
@@ -18,9 +18,11 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieId;
     private Long foreignMovieId;
-    @OneToMany(mappedBy = "foreignActorId")
+//    @OneToMany(mappedBy = "foreignActorId")
     private List<Actor> listOfActorsInMovie;
     private String title;
     private String review;
+    @Enumerated(EnumType.STRING)
     private MoviesGenres movieGenres;
+
 }

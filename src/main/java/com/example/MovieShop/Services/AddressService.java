@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.MovieShop.Objects.Address;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +51,12 @@ public class AddressService{
         log.info("Returning address by id: "+id);
         return addressRepository.findById(id)
                 .orElseThrow(() -> new AddressNotFoundException(id));
+    }
+    public Address updateAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id){
+        Address address = addressRepository.findById(id).orElseThrow(() -> new AddressNotFoundException(id));
+        address.setStreet(addressDto.getStreet());
+        address.setCity(address.getCity());
+        return address;
     }
     public void deleteAddress(long id){
         Address address = addressRepository.findById(id)

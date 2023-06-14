@@ -19,6 +19,7 @@ public class MovieRent {
     @JoinColumn(name = "clientId")
     private Client clientRentId;
     @ManyToOne
-    @JoinColumn(name = "foreignMovieId")
+    @JoinColumn(name = "movieId")
     private Movie movieRentId;
+    private boolean returned;
 }
