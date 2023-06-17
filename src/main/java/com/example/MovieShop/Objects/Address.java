@@ -1,9 +1,8 @@
 package com.example.MovieShop.Objects;
 
-import jakarta.persistence.*;
-import jakarta.persistence.GenerationType;
 import lombok.*;
 
+import javax.persistence.*;
 @Entity
 @Builder
 @NoArgsConstructor

@@ -1,7 +1,6 @@
 package com.example.MovieShop.ObjectsDto;
 
 import com.example.MovieShop.Objects.Movie;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.util.List;

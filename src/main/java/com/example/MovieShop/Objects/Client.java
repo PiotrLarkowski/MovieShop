@@ -1,6 +1,6 @@
 package com.example.MovieShop.Objects;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class Client {
     private int countOfBuy;
     private String clientFirstName;
     private String clientLastName;
-//    @OneToMany(mappedBy="clientRentId")
+    @OneToMany(mappedBy="foreignMovieId")
     private List<Movie> listOfMoviesRentByClient;
 
 }

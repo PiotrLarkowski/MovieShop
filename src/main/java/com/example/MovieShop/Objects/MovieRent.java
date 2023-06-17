@@ -1,6 +1,6 @@
 package com.example.MovieShop.Objects;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 @Entity
