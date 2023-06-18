@@ -48,8 +48,12 @@ public class ClientService {
         client.setClientLastName(client.getClientLastName());
         return client;
     }
-    public Client updateClientCountOfBuy(Client client, int countOfBuy){
-        client.setClientCountOfBuy(countOfBuy);
+    public Client addClientCountOfBuyByOne(Client client){
+        client.setClientCountOfBuy(client.getClientCountOfBuy() + 1);
+        return client;
+    }
+    public Client removeClientCountOfBuyByOne(Client client){
+        client.setClientCountOfBuy(client.getClientCountOfBuy() - 1);
         return client;
     }
     public Client updateClientAddress(AddressDto addressDto, Client client){
@@ -60,7 +64,8 @@ public class ClientService {
         client.setAddress(address);
         return client;
     }
-    public void deleteClient(Client client){
+    public void deleteClient(Long id){
+        Client client = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
         clientRepository.delete(client);
     }
 }
