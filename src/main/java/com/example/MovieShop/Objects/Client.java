@@ -20,7 +20,7 @@ public class Client {
     private int clientCountOfBuy;
     private String clientFirstName;
     private String clientLastName;
-    @OneToMany(mappedBy="foreignMovieId")
+    @OneToMany(mappedBy="movieId")
     private List<Movie> clientListOfMoviesRentByClient;
     @OneToOne
     @JoinColumn(name = "addressId")

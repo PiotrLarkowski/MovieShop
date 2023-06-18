@@ -17,8 +17,7 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieId;
-    private Long foreignMovieId;
-    @OneToMany(mappedBy = "foreignActorId")
+    @OneToMany(mappedBy = "actorId")
     private List<Actor> listOfActorsInMovie;
     private String title;
     private String review;

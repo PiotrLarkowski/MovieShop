@@ -17,10 +17,9 @@ public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long actorId;
-    private Long foreignActorId;
     private String actorFirstName;
     private String actorLastName;
     private String description;
-    @OneToMany(mappedBy = "foreignMovieId")
+    @OneToMany(mappedBy = "movieId")
     private List<Movie> movieListActorAppeared;
 }

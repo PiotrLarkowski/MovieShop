@@ -36,9 +36,11 @@ public class ClientService {
     public List<Client> getAllClients(){
         ArrayList<Client> listOfClient = new ArrayList();
         clientRepository.findAll().forEach(client -> listOfClient.add(client));
+        log.info("Return Clients list");
         return listOfClient;
     }
     public Client getClientById(Long id){
+        log.info("Return Client by Id");
         return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
     }
     public Client updateFirstNameandLastNameOfClient(ClientDto clientDto){
@@ -46,14 +48,17 @@ public class ClientService {
                 .orElseThrow(() -> new ClientNotFoundException(clientDto.getClientId()));
         client.setClientFirstName(clientDto.getClientFirstName());
         client.setClientLastName(client.getClientLastName());
+        log.info("Update client name");
         return client;
     }
     public Client addClientCountOfBuyByOne(Client client){
         client.setClientCountOfBuy(client.getClientCountOfBuy() + 1);
+        log.info("Add client buy count ");
         return client;
     }
     public Client removeClientCountOfBuyByOne(Client client){
         client.setClientCountOfBuy(client.getClientCountOfBuy() - 1);
+        log.info("Remove client buy count ");
         return client;
     }
     public Client updateClientAddress(AddressDto addressDto, Client client){
@@ -62,10 +67,12 @@ public class ClientService {
                 .street(addressDto.getStreet())
                 .build();
         client.setAddress(address);
+        log.info("Add client address");
         return client;
     }
     public void deleteClient(Long id){
         Client client = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
         clientRepository.delete(client);
+        log.info("Delete client");
     }
 }

@@ -14,7 +14,6 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 public class MovieDto {
-    private Long movieId;
     private List<Actor> listOfActorsInMovie;
     private String title;
     private String review;

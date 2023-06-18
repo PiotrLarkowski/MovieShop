@@ -12,7 +12,6 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 public class MovieRentDto {
-    private Long movieRentalId;
     private Client clientRentId;
     private Movie movieRentId;
     private boolean returned;

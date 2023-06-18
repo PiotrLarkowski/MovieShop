@@ -13,7 +13,6 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 public class ClientDto {
-    private Long clientId;
     private String clientFirstName;
     private String clientLastName;
     private List<Movie> clientListOfMoviesRentByClient;

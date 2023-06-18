@@ -13,7 +13,6 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 public class ActorDto {
-    private long actorId;
     private String actorFirstName;
     private String actorLastName;
     private String description;

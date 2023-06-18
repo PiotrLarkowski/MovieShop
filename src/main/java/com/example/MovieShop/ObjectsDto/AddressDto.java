@@ -10,7 +10,6 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 public class AddressDto {
-    private Long addressId;
     private String city;
     private String street;
 }
