@@ -24,9 +24,8 @@ public class ActorService {
     }
 
     @PostMapping
-    public Actor createNewActor(@RequestBody @Validated ActorDto actorDto, @PathVariable Long id){
+    public Actor createNewActor(@RequestBody @Validated ActorDto actorDto){
         Actor actor = Actor.builder()
-                .actorId(id)
                 .actorFirstName(actorDto.getActorFirstName())
                 .actorLastName(actorDto.getActorLastName())
                 .description(actorDto.getDescription())
@@ -49,8 +48,9 @@ public class ActorService {
         return actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
     }
     @PutMapping
-    public Actor updateActor(@RequestBody @Validated ActorDto actorDto, @PathVariable Long id){
-        Actor actor = actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
+    public Actor updateActor(@RequestBody @Validated ActorDto actorDto){
+        Actor actor = actorRepository.findById(actorDto.getActorId())
+                .orElseThrow(() -> new ActorNotFoundException(actorDto.getActorId()));
         actor.setActorFirstName(actorDto.getActorFirstName());
         actor.setActorLastName(actorDto.getActorLastName());
         actor.setDescription(actorDto.getDescription());

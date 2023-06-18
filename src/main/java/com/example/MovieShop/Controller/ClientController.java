@@ -15,17 +15,14 @@ import java.util.List;
 @RequestMapping(path = "/Client")
 public class ClientController {
     private final ClientService clientService;
-
     public ClientController(ClientService clientService) {
         this.clientService = clientService;
     }
-
     @PostMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public Client createClient(@RequestBody @Validated ClientDto clientDto){
         return clientService.createClient(clientDto);
     }
-
     @GetMapping
     public List<Client> getAllClients(){
         return clientService.getAllClients();
