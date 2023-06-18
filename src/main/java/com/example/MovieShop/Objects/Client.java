@@ -17,11 +17,11 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clientId;
-    private int countOfBuy;
+    private int clientCountOfBuy;
     private String clientFirstName;
     private String clientLastName;
     @OneToMany(mappedBy="foreignMovieId")
-    private List<Movie> listOfMoviesRentByClient;
+    private List<Movie> clientListOfMoviesRentByClient;
     @OneToOne
     @JoinColumn(name = "addressId")
     private Address address;

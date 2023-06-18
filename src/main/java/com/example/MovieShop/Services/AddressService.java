@@ -35,7 +35,6 @@ public class AddressService{
                 .addressId(addressDto.getAddressId())
                 .city(addressDto.getCity())
                 .street(addressDto.getStreet())
-                .client(client)
                 .build();
         log.info("Address has been created");
         addressRepository.save(address);

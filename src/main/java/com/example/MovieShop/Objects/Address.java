@@ -18,6 +18,4 @@ public class Address {
     private Long addressForeignId;
     private String city;
     private String street;
-    @OneToOne
-    private Client client;
 }

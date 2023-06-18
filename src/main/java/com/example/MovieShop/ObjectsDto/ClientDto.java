@@ -14,8 +14,7 @@ import java.util.List;
 @EqualsAndHashCode
 public class ClientDto {
     private Long clientId;
-    private int countOfBuy;
-    private List<Movie> listOfPurchasedMovies;
     private String clientFirstName;
     private String clientLastName;
+    private List<Movie> clientListOfMoviesRentByClient;
 }
