@@ -22,5 +22,7 @@ public class Client {
     private String clientLastName;
     @OneToMany(mappedBy="foreignMovieId")
     private List<Movie> listOfMoviesRentByClient;
-
+    @OneToOne
+    @JoinColumn(name = "addressId")
+    private Address address;
 }

@@ -1,8 +1,11 @@
 package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Address.AddressNotFoundException;
+import com.example.MovieShop.Exceptions.Client.ClientNotFoundException;
+import com.example.MovieShop.Objects.Client;
 import com.example.MovieShop.ObjectsDto.AddressDto;
 import com.example.MovieShop.Repositorys.AddressRepository;
+import com.example.MovieShop.Repositorys.ClientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,16 +22,20 @@ import java.util.List;
 @Transactional
 public class AddressService{
     private final AddressRepository addressRepository;
+    private final ClientRepository clientRepository;
 
-    public AddressService(AddressRepository addressRepository) {
+    public AddressService(AddressRepository addressRepository, ClientRepository clientRepository) {
         this.addressRepository = addressRepository;
+        this.clientRepository = clientRepository;
     }
 
-    public Address createAddress(AddressDto addressDto){
+    public Address createAddress(AddressDto addressDto, Long clientId){
+        Client client = clientRepository.findById(clientId).orElseThrow(() -> new ClientNotFoundException(clientId));
         Address address = Address.builder()
                 .addressId(addressDto.getAddressId())
                 .city(addressDto.getCity())
                 .street(addressDto.getStreet())
+                .client(client)
                 .build();
         log.info("Address has been created");
         addressRepository.save(address);

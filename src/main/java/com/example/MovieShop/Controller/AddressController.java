@@ -18,14 +18,14 @@ public class AddressController {
     }
     @PostMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Address createAddress(@RequestBody @Validated AddressDto addressDto) throws Exception{
-        return addressService.createAddress(addressDto);
+    public Address createAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long clientId) throws Exception{
+        return addressService.createAddress(addressDto, clientId);
     }
     @PutMapping(path = "/{id}")
     public void updateAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
         addressService.updateAddress(addressDto, id);
     }
-    @GetMapping(path = "/getAll")
+    @GetMapping
     public List<Address> getAllAddresses(){
         return addressService.getAllAddress();
     }
