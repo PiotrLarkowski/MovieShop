@@ -16,7 +16,7 @@ public class MovieRentController {
     public MovieRentController(MovieRentService movieRentService) {
         this.movieRentService = movieRentService;
     }
-    @PostMapping("/{movieId}{clientId}")
+    @PostMapping("/{movieId}/{clientId}")
     @ResponseStatus(HttpStatus.CREATED)
     public MovieRent createMovieRent(@PathVariable Long movieId, @PathVariable Long clientId){
         return(movieRentService.createMovieRent(movieId, clientId));

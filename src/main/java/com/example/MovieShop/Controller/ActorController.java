@@ -31,7 +31,7 @@ public class ActorController {
     public Actor updateActor(@RequestBody @Validated ActorDto actorDto, @PathVariable Long id){
         return actorService.updateActor(actorDto, id);
     }
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteActor(@PathVariable Long id){
         actorService.deleteActor(id);
     }
