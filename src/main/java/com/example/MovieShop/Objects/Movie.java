@@ -24,4 +24,10 @@ public class Movie {
     @Enumerated(EnumType.STRING)
     private MoviesGenres movieGenres;
 
+    public void addActorToMovie(Actor actor){
+        listOfActorsInMovie.add(actor);
+    }
+    public void removeActorToMovie(Actor actor){
+        listOfActorsInMovie.remove(actor);
+    }
 }
