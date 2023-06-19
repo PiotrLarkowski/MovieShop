@@ -27,9 +27,9 @@ public class ActorController {
     public List<Actor> getAllActors(){
         return actorService.getAllActors();
     }
-    @PutMapping
-    public Actor updateActor(@RequestBody @Validated ActorDto actorDto){
-        return actorService.updateActor(actorDto);
+    @PutMapping("/{id}")
+    public Actor updateActor(@RequestBody @Validated ActorDto actorDto, @PathVariable Long id){
+        return actorService.updateActor(actorDto, id);
     }
     @DeleteMapping
     public void deleteActor(@PathVariable Long id){

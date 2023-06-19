@@ -31,9 +31,9 @@ public class ClientController {
     public Client getClientById(@PathVariable Long id){
         return clientService.getClientById(id);
     }
-    @PutMapping("/name")
-    public Client updateClientFirstAndLastName(@RequestBody @Validated ClientDto clientDto){
-        return clientService.updateFirstNameandLastNameOfClient(clientDto);
+    @PutMapping("/name/{id}")
+    public Client updateClientFirstAndLastName(@RequestBody @Validated ClientDto clientDto, @PathVariable Long id){
+        return clientService.updateFirstNameandLastNameOfClient(clientDto, id);
     }
     @PutMapping("/IncreaseCountOfBuy")
     public Client increaseClientCountOfBuysByOne(@RequestBody @Validated Client client){
@@ -45,8 +45,7 @@ public class ClientController {
     }
     @PutMapping("/address/{id}")
     public Client updateClientAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
-        Client clientById = clientService.getClientById(id);
-        return clientService.updateClientAddress(addressDto, clientById);
+        return clientService.updateClientAddress(addressDto, id);
     }
     @DeleteMapping("/{id}")
     public void deleteClient(@PathVariable Long id){

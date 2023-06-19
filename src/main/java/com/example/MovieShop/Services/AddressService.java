@@ -32,7 +32,6 @@ public class AddressService{
     public Address createAddress(AddressDto addressDto, Long clientId){
         Client client = clientRepository.findById(clientId).orElseThrow(() -> new ClientNotFoundException(clientId));
         Address address = Address.builder()
-                .addressId(addressDto.getAddressId())
                 .city(addressDto.getCity())
                 .street(addressDto.getStreet())
                 .build();

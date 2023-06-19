@@ -48,9 +48,9 @@ public class ActorService {
         return actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
     }
     @PutMapping
-    public Actor updateActor(@RequestBody @Validated ActorDto actorDto){
-        Actor actor = actorRepository.findById(actorDto.getActorId())
-                .orElseThrow(() -> new ActorNotFoundException(actorDto.getActorId()));
+    public Actor updateActor(@RequestBody @Validated ActorDto actorDto, Long id){
+        Actor actor = actorRepository.findById(id)
+                .orElseThrow(() -> new ActorNotFoundException(id));
         actor.setActorFirstName(actorDto.getActorFirstName());
         actor.setActorLastName(actorDto.getActorLastName());
         actor.setDescription(actorDto.getDescription());

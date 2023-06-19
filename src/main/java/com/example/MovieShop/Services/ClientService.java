@@ -43,9 +43,9 @@ public class ClientService {
         log.info("Return Client by Id");
         return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
     }
-    public Client updateFirstNameandLastNameOfClient(ClientDto clientDto){
-        Client client = clientRepository.findById(clientDto.getClientId())
-                .orElseThrow(() -> new ClientNotFoundException(clientDto.getClientId()));
+    public Client updateFirstNameandLastNameOfClient(ClientDto clientDto, Long id){
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new ClientNotFoundException(id));
         client.setClientFirstName(clientDto.getClientFirstName());
         client.setClientLastName(client.getClientLastName());
         log.info("Update client name");
@@ -61,7 +61,8 @@ public class ClientService {
         log.info("Remove client buy count ");
         return client;
     }
-    public Client updateClientAddress(AddressDto addressDto, Client client){
+    public Client updateClientAddress(AddressDto addressDto, Long id){
+        Client client = getClientById(id);
         Address address = Address.builder()
                 .city(addressDto.getCity())
                 .street(addressDto.getStreet())

@@ -52,7 +52,7 @@ public class MovieRentService {
     public MovieRent updateMovieRent(@RequestBody @Validated MovieRentDto movieRentDto, @PathVariable Long id){
         MovieRent movieRent = movieRentRepository.findById(id).orElseThrow(() -> new MovieRentNotFoundException(id));
         movieRent.setClientRentId(movieRentDto.getClientRentId());
-        movieRent.setMovieRentalId(movieRentDto.getMovieRentalId());
+        movieRent.setMovieRentId(movieRentDto.getMovieRentId());
         movieRent.setReturned(movieRent.isReturned());
         return movieRent;
     }
