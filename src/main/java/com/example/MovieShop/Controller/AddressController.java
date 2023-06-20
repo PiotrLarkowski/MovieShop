@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/address")
+@RequestMapping(path = "/Address")
 public class AddressController {
     private final AddressService addressService;
     public AddressController(AddressService addressService) {

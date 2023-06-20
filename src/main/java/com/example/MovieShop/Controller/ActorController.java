@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(name ="/actor")
+@RequestMapping(path ="/Actor")
 public class ActorController {
     private final ActorService actorService;
     public ActorController(ActorService actorService) {
