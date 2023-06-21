@@ -4,9 +4,11 @@ import com.example.MovieShop.Objects.Actor;
 import com.example.MovieShop.ObjectsDto.Actor.ActorDto;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
 import com.example.MovieShop.Services.ActorService;
+import org.springframework.context.annotation.Role;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -20,11 +22,13 @@ public class ActorController {
     public Actor createActor(@RequestBody @Validated ActorDto actorDto){
         return actorService.createNewActor(actorDto);
     }
-    @GetMapping("{id}")
-    public Actor getActorById(@PathVariable Long id){
-        return actorService.getActorById(id);
+    @GetMapping("/{id}")
+    @RolesAllowed({"ADMIN"})
+    public ActorWithoutList getActorById(@PathVariable Long id){
+        return actorService.getActorByIdWithoutList(id);
     }
     @GetMapping
+    @RolesAllowed({"USER"})
     public List<ActorWithoutList> getAllActors(){
         return actorService.getAllActors();
     }

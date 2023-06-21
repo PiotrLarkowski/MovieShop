@@ -28,11 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new InMemoryUserDetailsManager(userDetails,admin);
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/actor").hasRole("ADMIN");
-//                .and()
-//                .formLogin().permitAll();
-    }
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http.authorizeRequests()
+//                .antMatchers("/actor").hasRole("USER");
+//    }
 }

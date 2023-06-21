@@ -4,9 +4,11 @@ import com.example.MovieShop.Objects.Address;
 import com.example.MovieShop.ObjectsDto.AddressDto;
 import com.example.MovieShop.Services.AddressService;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -25,6 +27,7 @@ public class AddressController {
     public void updateAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
         addressService.updateAddress(addressDto, id);
     }
+    @RolesAllowed({"ADMIN"})
     @GetMapping
     public List<Address> getAllAddresses(){
         return addressService.getAllAddress();

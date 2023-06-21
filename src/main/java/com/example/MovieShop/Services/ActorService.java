@@ -52,6 +52,16 @@ public class ActorService {
         return actorWithoutList;
     }
     @GetMapping(path="/{id}")
+    public ActorWithoutList getActorByIdWithoutList(@PathVariable Long id){
+        log.info("Actor has been shown");
+        Actor actor = actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
+        ActorWithoutList actorWithoutList = ActorWithoutList.builder()
+                .actorFirstName(actor.getActorFirstName())
+                .actorLastName(actor.getActorLastName())
+                .description(actor.getDescription())
+                .build();
+        return actorWithoutList;
+    }
     public Actor getActorById(@PathVariable Long id){
         log.info("Actor has been shown");
         return actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
