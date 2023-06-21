@@ -1,4 +1,4 @@
-package com.example.MovieShop.ObjectsDto;
+package com.example.MovieShop.ObjectsDto.Actor;
 
 import com.example.MovieShop.Objects.Movie;
 import lombok.*;
@@ -10,8 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class ActorDto {
     private String actorFirstName;
     private String actorLastName;

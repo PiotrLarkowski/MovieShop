@@ -1,7 +1,8 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Actor;
-import com.example.MovieShop.ObjectsDto.ActorDto;
+import com.example.MovieShop.ObjectsDto.Actor.ActorDto;
+import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
 import com.example.MovieShop.Services.ActorService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path ="/Actor")
+@RequestMapping(path ="/actor")
 public class ActorController {
     private final ActorService actorService;
     public ActorController(ActorService actorService) {
@@ -24,7 +25,7 @@ public class ActorController {
         return actorService.getActorById(id);
     }
     @GetMapping
-    public List<Actor> getAllActors(){
+    public List<ActorWithoutList> getAllActors(){
         return actorService.getAllActors();
     }
     @PutMapping("/{id}")

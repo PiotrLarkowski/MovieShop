@@ -1,7 +1,6 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Client;
-import com.example.MovieShop.ObjectsDto.ActorDto;
 import com.example.MovieShop.ObjectsDto.AddressDto;
 import com.example.MovieShop.ObjectsDto.ClientDto;
 import com.example.MovieShop.Services.ClientService;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/Client")
+@RequestMapping(path = "/client")
 public class ClientController {
     private final ClientService clientService;
     public ClientController(ClientService clientService) {

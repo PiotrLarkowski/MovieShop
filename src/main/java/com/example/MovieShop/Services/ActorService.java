@@ -2,7 +2,8 @@ package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Actor.ActorNotFoundException;
 import com.example.MovieShop.Objects.Actor;
-import com.example.MovieShop.ObjectsDto.ActorDto;
+import com.example.MovieShop.ObjectsDto.Actor.ActorDto;
+import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
 import com.example.MovieShop.Repositorys.ActorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -36,11 +38,18 @@ public class ActorService {
         return(actor);
     }
     @GetMapping()
-    public List<Actor> getAllActors(){
+    public List<ActorWithoutList> getAllActors(){
         List<Actor> actorList = new ArrayList<>();
         actorRepository.findAll().forEach(actorList::add);
+        List<ActorWithoutList> actorWithoutList = actorList.stream()
+                .map(actorInList -> ActorWithoutList.builder()
+                        .actorFirstName(actorInList.getActorFirstName())
+                        .actorLastName(actorInList.getActorFirstName())
+                        .description(actorInList.getDescription())
+                        .build())
+                .collect(Collectors.toList());
         log.info("All actors has been shown");
-        return actorList;
+        return actorWithoutList;
     }
     @GetMapping(path="/{id}")
     public Actor getActorById(@PathVariable Long id){

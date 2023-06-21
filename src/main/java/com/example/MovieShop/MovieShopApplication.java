@@ -2,15 +2,14 @@ package com.example.MovieShop;
 
 import com.example.MovieShop.Objects.*;
 import com.example.MovieShop.ObjectsDto.*;
+import com.example.MovieShop.ObjectsDto.Actor.ActorDto;
 import com.example.MovieShop.Services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class MovieShopApplication implements CommandLineRunner {
