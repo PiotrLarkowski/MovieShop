@@ -8,11 +8,13 @@ import com.example.MovieShop.Services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 @SpringBootApplication
+@EnableSwagger2
 public class MovieShopApplication implements CommandLineRunner {
 	private final ActorService actorService;
 	private final AddressService addressService;
