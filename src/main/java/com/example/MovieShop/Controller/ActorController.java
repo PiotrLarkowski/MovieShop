@@ -19,24 +19,27 @@ public class ActorController {
         this.actorService = actorService;
     }
     @PostMapping
+    @RolesAllowed({"ADMIN"})
     public Actor createActor(@RequestBody @Validated ActorDto actorDto){
         return actorService.createNewActor(actorDto);
     }
     @GetMapping("/{id}")
-    @RolesAllowed({"ADMIN"})
+    @RolesAllowed({"ADMIN","USER"})
     public ActorWithoutList getActorById(@PathVariable Long id){
         return actorService.getActorByIdWithoutList(id);
     }
     @GetMapping
-    @RolesAllowed({"USER"})
+    @RolesAllowed({"ADMIN","USER"})
     public List<ActorWithoutList> getAllActors(){
         return actorService.getAllActors();
     }
     @PutMapping("/{id}")
+    @RolesAllowed({"ADMIN"})
     public Actor updateActor(@RequestBody @Validated ActorDto actorDto, @PathVariable Long id){
         return actorService.updateActor(actorDto, id);
     }
     @DeleteMapping("/{id}")
+    @RolesAllowed({"ADMIN"})
     public void deleteActor(@PathVariable Long id){
         actorService.deleteActor(id);
     }
