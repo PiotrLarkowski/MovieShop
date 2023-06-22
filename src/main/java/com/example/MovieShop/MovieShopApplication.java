@@ -3,6 +3,7 @@ package com.example.MovieShop;
 import com.example.MovieShop.Objects.*;
 import com.example.MovieShop.ObjectsDto.*;
 import com.example.MovieShop.ObjectsDto.Actor.ActorDto;
+import com.example.MovieShop.ObjectsDto.Client.ClientDto;
 import com.example.MovieShop.Services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

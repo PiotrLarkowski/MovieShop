@@ -1,4 +1,4 @@
-package com.example.MovieShop.ObjectsDto;
+package com.example.MovieShop.ObjectsDto.Client;
 
 import com.example.MovieShop.Objects.Movie;
 import lombok.*;
@@ -10,8 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class ClientDto {
     private String clientFirstName;
     private String clientLastName;

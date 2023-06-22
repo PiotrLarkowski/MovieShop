@@ -2,7 +2,8 @@ package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Client;
 import com.example.MovieShop.ObjectsDto.AddressDto;
-import com.example.MovieShop.ObjectsDto.ClientDto;
+import com.example.MovieShop.ObjectsDto.Client.ClientDto;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.Services.ClientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -23,7 +24,7 @@ public class ClientController {
         return clientService.createClient(clientDto);
     }
     @GetMapping
-    public List<Client> getAllClients(){
+    public List<ClientWithoutList> getAllClients(){
         return clientService.getAllClients();
     }
     @GetMapping("/{id}")
