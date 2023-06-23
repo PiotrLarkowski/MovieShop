@@ -41,6 +41,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST,"/actor").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/actor").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/actor").hasRole("ADMIN")
+
+                .antMatchers(HttpMethod.GET,"/address").permitAll()
+                .antMatchers(HttpMethod.POST,"/address").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/address").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/address").hasRole("ADMIN")
+
+                .antMatchers(HttpMethod.GET,"/client").permitAll()
+                .antMatchers(HttpMethod.POST,"/client").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/client").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/client").hasRole("ADMIN")
+
+                .antMatchers(HttpMethod.GET,"/movie").permitAll()
+                .antMatchers(HttpMethod.POST,"/movie").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/movie").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/movie").hasRole("ADMIN")
+
+                .antMatchers(HttpMethod.GET,"/movieRent").permitAll()
+                .antMatchers(HttpMethod.POST,"/movieRent").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/movieRent").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/movieRent").hasRole("ADMIN")
+
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
