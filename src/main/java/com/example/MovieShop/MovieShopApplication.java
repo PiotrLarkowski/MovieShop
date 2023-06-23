@@ -6,6 +6,7 @@ import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientDto;
 import com.example.MovieShop.Services.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,82 +20,104 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 @SpringBootApplication
 @EnableSwagger2
+@Slf4j
 public class MovieShopApplication implements CommandLineRunner {
-	private final ActorService actorService;
-	private final AddressService addressService;
-	private final ClientService clientService;
-	private final MovieService movieService;
-	private final MovieRentService movieRentService;
+    private final ActorService actorService;
+    private final AddressService addressService;
+    private final ClientService clientService;
+    private final MovieService movieService;
+    private final MovieRentService movieRentService;
 
-	public MovieShopApplication(ActorService actorService, AddressService addressService, ClientService clientService, MovieService movieService, MovieRentService movieRentService) {
-		this.actorService = actorService;
-		this.addressService = addressService;
-		this.clientService = clientService;
-		this.movieService = movieService;
-		this.movieRentService = movieRentService;
-	}
+    public MovieShopApplication(ActorService actorService, AddressService addressService, ClientService clientService, MovieService movieService, MovieRentService movieRentService) {
+        this.actorService = actorService;
+        this.addressService = addressService;
+        this.clientService = clientService;
+        this.movieService = movieService;
+        this.movieRentService = movieRentService;
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(MovieShopApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MovieShopApplication.class, args);
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-		AddressDto addressDto = AddressDto.builder()
-				.city("Kraków")
-				.street("Fabryczna 13/2")
-				.build();
-		ClientDto clientDto = ClientDto.builder()
-				.clientFirstName("Piotr")
-				.clientLastName("Larkowski")
-				.clientListOfMoviesRentByClient(new ArrayList<>())
-				.build();
-		ActorWithoutIdAndListDto actorWithoutIdAndListDto = ActorWithoutIdAndListDto.builder()
-				.actorFirstName("Tom ")
-				.actorLastName("Cruise")
-				.description("Tom Cruise, właśc. (...) Za początek wielkiej kariery aktora uważa się nominowaną do Złotego Globu rolę w filmie Ryzykowny interes.")
-				.build();
+    @Override
+    public void run(String... args) throws Exception {
+        log.info("-----------------------------------------------CREATING EXAMPLE DATA-----------------------------------------------");
+        String[] arrayOfCities = {"Kraków", "Szczecin", "Bydgoszcz", "Lodz", "Radom", "Warszawa", "Gdansk", "Sopot", "Opole"
+                , "Poznań", "Lublin", "Białystok"};
+        String[] arrayOfStreets = {"1 Maja", "3 Maja", "11 Listopada", "Akademicka", "gen. Władysława Andersa", "Armii Krajowej",
+                "Balonowa", "Michała Bałuckiego", "Bankowa", "Tadeusza Kościuszki", "Chłodna", "Chmielna"};
+        AddressDto addressDtoForLoop = null;
+        Random rand = new Random();
 
-		Client client = clientService.createClient(clientDto);
-		Address address = addressService.createAddress(addressDto, client.getClientId());
-		Actor newActor = actorService.createNewActor(actorWithoutIdAndListDto);
+        String[] arrayOfClientFirstNames = {"Piotr", "Pawel", "Tomek", "Krystian", "Marcin", "Sebastian", "Wiktor", "Slawek",
+                "Zbyszek", "Norbert"};
+        String[] arrayOfClientLastName = {"Larkowski", "Kowalski", "Rowinski", "Gut", "Baczkowski", "Baginski", "Chacinski",
+                "Zarski", "Wojnarski", "Wolanowski"};
+        ClientDto clientDto = null;
+        Client client = null;
 
-		MovieDto movieDto = MovieDto.builder()
-				.listOfActorsInMovie(new ArrayList<Actor>(Arrays.asList(newActor)))
-				.title("Ryzykowny Interes")
-				.review("Pod nieobecność rodziców nastolatek Joel poznaje kobietę lekkich obyczajów, Lanę, i za jej namową urządza w miejscu zamieszkania... dom publiczny.")
-				.movieGenres(MoviesGenres.COMEDY)
-				.build();
+        for (int i = 0; i < 20; i++) {
+            clientDto = ClientDto.builder()
+                    .clientFirstName(arrayOfClientFirstNames[rand.nextInt(10)])
+                    .clientLastName(arrayOfClientLastName[rand.nextInt(10)])
+                    .clientListOfMoviesRentByClient(new ArrayList<>())
+                    .build();
+            client = clientService.createClient(clientDto);
+            addressService.createAddress(AddressDto.builder()
+                    .city(arrayOfCities[rand.nextInt(10)])
+                    .street(arrayOfStreets[rand.nextInt(10)])
+                    .build()
+            ,client.getClientId());
 
-		Movie movie = movieService.CreateMovie(movieDto);
-		movieRentService.createMovieRent(movie.getMovieId(),client.getClientId());
-		ActorWithoutIdAndListDto actorForUpdate = ActorWithoutIdAndListDto.builder()
-				.actorFirstName("Piotr")
-				.actorLastName("Larkowski")
-				.description("description")
-				.build();
-		actorService.updateActor(actorForUpdate,1L);
-	}
+            Actor actor = actorService.createNewActor(ActorWithoutIdAndListDto.builder()
+                    .actorFirstName(arrayOfClientFirstNames[rand.nextInt(10)])
+                    .actorLastName(arrayOfClientLastName[rand.nextInt(10)])
+                    .description("description")
+                    .build());
+        }
 
-	@Bean
-	public Docket get(){
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.build().apiInfo(createApiInfo());
-	}
+        MovieDto movieDto = MovieDto.builder()
+                .listOfActorsInMovie(new ArrayList<Actor>())
+                .title("Ryzykowny Interes")
+                .review("Pod nieobecność rodziców nastolatek Joel poznaje kobietę lekkich obyczajów, Lanę, i za jej namową urządza w miejscu zamieszkania... dom publiczny.")
+                .movieGenres(MoviesGenres.COMEDY)
+                .build();
 
-	private ApiInfo createApiInfo() {
-		return new ApiInfo("MovieShopApi",
-				"Rental movie database",
-				"1.00",
-				"",
-				new Contact("Piotr","https://www.linkedin.com/in/piotr-larkowski/","p.larkowski90@gmail.com"),
-				"My own licence",
-				"My own licence",
-				Collections.emptyList()
-		);
-	}
+        Movie movie = movieService.CreateMovie(movieDto);
+        movieRentService.createMovieRent(movie.getMovieId(), client.getClientId());
+
+        ActorWithoutIdAndListDto actorForUpdate = ActorWithoutIdAndListDto.builder()
+                .actorFirstName("Robin")
+                .actorLastName("Williams")
+                .description("description")
+                .build();
+        actorService.updateActor(actorForUpdate, 1L);
+
+        log.info("----------------------------------------END OF CREATING EXAMPLE DATA-----------------------------------------------");
+
+    }
+
+    @Bean
+    public Docket get() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .select()
+                .build().apiInfo(createApiInfo());
+    }
+
+    private ApiInfo createApiInfo() {
+        return new ApiInfo("MovieShopApi",
+                "Rental movie database",
+                "1.00",
+                "",
+                new Contact("Piotr", "https://www.linkedin.com/in/piotr-larkowski/", "p.larkowski90@gmail.com"),
+                "My own licence",
+                "My own licence",
+                Collections.emptyList()
+        );
+    }
 }
