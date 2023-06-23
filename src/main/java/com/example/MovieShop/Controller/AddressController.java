@@ -39,7 +39,7 @@ public class AddressController {
     public Address getAddressById(@PathVariable Long id){
         return addressService.getAddress(id);
     }
-    @Secured({"ROLE_ADMIN"})
+    @DeleteMapping(path = "/{id}")
     public void deleteAddressById(@PathVariable Long id){
         addressService.deleteAddress(id);
     }

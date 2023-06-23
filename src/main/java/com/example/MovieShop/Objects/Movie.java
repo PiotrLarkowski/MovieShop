@@ -17,7 +17,7 @@ public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieId;
-    @OneToMany(mappedBy = "actorId")
+    @OneToMany(mappedBy = "actorId",cascade = CascadeType.ALL)
     private List<Actor> listOfActorsInMovie;
     private String title;
     private String review;
