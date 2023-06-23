@@ -27,13 +27,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .build();
         return new InMemoryUserDetailsManager(user,admin);
     }
-
+    private static final String[] SWAGGER_WHITELIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+    };
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.httpBasic();
-        http.authorizeRequests()
+        http.cors()
                 .and()
-                .formLogin().permitAll();
+                .authorizeRequests()
+                .antMatchers(SWAGGER_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.POST,"/actor").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .httpBasic();
+//        http.httpBasic().;
+//        http.authorizeRequests().antMatchers(HttpMethod.POST,"/actor").hasRole("ADMIN")
+//                .antMatchers(HttpMethod.PUT,"/actor").hasRole("ADMIN")
+//                .anyRequest().permitAll()
+//                .and()
+//                .formLogin().permitAll()
+//                .and()
+//                .logout().permitAll();
     }
 
 }

@@ -6,13 +6,15 @@ import lombok.*;
 import java.util.List;
 
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class ActorDto {
+    @NonNull
     private String actorFirstName;
+    @NonNull
     private String actorLastName;
+    @NonNull
     private String description;
     private List<Movie> movieListActorAppeared;
 }

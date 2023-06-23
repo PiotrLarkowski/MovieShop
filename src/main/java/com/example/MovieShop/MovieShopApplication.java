@@ -3,6 +3,7 @@ package com.example.MovieShop;
 import com.example.MovieShop.Objects.*;
 import com.example.MovieShop.ObjectsDto.*;
 import com.example.MovieShop.ObjectsDto.Actor.ActorDto;
+import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientDto;
 import com.example.MovieShop.Services.*;
 import org.springframework.boot.CommandLineRunner;
@@ -45,11 +46,11 @@ public class MovieShopApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		AddressDto addressDto = new AddressDto("Kraków","Fabryczna 13/2");
 		ClientDto clientDto = new ClientDto("Piotr","Larkowski",new ArrayList<>());
-		ActorDto actorDto = new ActorDto("Tom ","Cruise","Tom Cruise, właśc. (...) Za początek wielkiej kariery aktora uważa się nominowaną do Złotego Globu rolę w filmie Ryzykowny interes.", new ArrayList<>());
+		ActorWithoutList actorWithoutList = new ActorWithoutList("Tom ","Cruise","Tom Cruise, właśc. (...) Za początek wielkiej kariery aktora uważa się nominowaną do Złotego Globu rolę w filmie Ryzykowny interes.");
 
 		Client client = clientService.createClient(clientDto);
 		Address address = addressService.createAddress(addressDto, client.getClientId());
-		Actor newActor = actorService.createNewActor(actorDto);
+		Actor newActor = actorService.createNewActor(actorWithoutList);
 
 		MovieDto movieDto = new MovieDto(new ArrayList<Actor>(Arrays.asList(newActor)),"Ryzykowny Interes","Pod nieobecność rodziców nastolatek Joel poznaje kobietę lekkich obyczajów, Lanę, i za jej namową urządza w miejscu zamieszkania... dom publiczny.", MoviesGenres.COMEDY);
 		Movie movie = movieService.CreateMovie(movieDto);

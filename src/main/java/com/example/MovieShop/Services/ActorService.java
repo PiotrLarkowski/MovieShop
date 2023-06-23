@@ -2,6 +2,7 @@ package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Actor.ActorNotFoundException;
 import com.example.MovieShop.Objects.Actor;
+import com.example.MovieShop.Objects.Movie;
 import com.example.MovieShop.ObjectsDto.Actor.ActorDto;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
 import com.example.MovieShop.Repositorys.ActorRepository;
@@ -26,12 +27,12 @@ public class ActorService {
     }
 
     @PostMapping
-    public Actor createNewActor(@RequestBody @Validated ActorDto actorDto){
+    public Actor createNewActor(@RequestBody @Validated ActorWithoutList actorWithoutListDto){
         Actor actor = Actor.builder()
-                .actorFirstName(actorDto.getActorFirstName())
-                .actorLastName(actorDto.getActorLastName())
-                .description(actorDto.getDescription())
-                .movieListActorAppeared(actorDto.getMovieListActorAppeared())
+                .actorFirstName(actorWithoutListDto.getActorFirstName())
+                .actorLastName(actorWithoutListDto.getActorLastName())
+                .description(actorWithoutListDto.getDescription())
+                .movieListActorAppeared(new ArrayList<>())
                 .build();
         actorRepository.save(actor);
         log.info("Actor has been created");

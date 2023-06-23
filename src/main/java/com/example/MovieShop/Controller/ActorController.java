@@ -4,7 +4,6 @@ import com.example.MovieShop.Objects.Actor;
 import com.example.MovieShop.ObjectsDto.Actor.ActorDto;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
 import com.example.MovieShop.Services.ActorService;
-import org.springframework.context.annotation.Role;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,17 +18,15 @@ public class ActorController {
         this.actorService = actorService;
     }
     @PostMapping
-    @RolesAllowed({"ADMIN"})
-    public Actor createActor(@RequestBody @Validated ActorDto actorDto){
-        return actorService.createNewActor(actorDto);
+    @RolesAllowed({"ROLE_ADMIN"})
+    public Actor createActor(@RequestBody @Validated ActorWithoutList actorWithoutList){
+        return actorService.createNewActor(actorWithoutList);
     }
     @GetMapping("/{id}")
-    @RolesAllowed({"ADMIN","USER"})
     public ActorWithoutList getActorById(@PathVariable Long id){
         return actorService.getActorByIdWithoutList(id);
     }
     @GetMapping
-    @RolesAllowed({"ADMIN","USER"})
     public List<ActorWithoutList> getAllActors(){
         return actorService.getAllActors();
     }
