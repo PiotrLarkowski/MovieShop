@@ -6,9 +6,11 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ActorWithoutList {
-    private Long actorId;
+public class ActorWithoutIdAndListDto {
+    @NonNull
     private String actorFirstName;
+    @NonNull
     private String actorLastName;
+    @NonNull
     private String description;
 }

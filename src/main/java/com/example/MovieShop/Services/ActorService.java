@@ -2,8 +2,8 @@ package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Actor.ActorNotFoundException;
 import com.example.MovieShop.Objects.Actor;
-import com.example.MovieShop.Objects.Movie;
-import com.example.MovieShop.ObjectsDto.Actor.ActorDto;
+import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutId;
+import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
 import com.example.MovieShop.Repositorys.ActorRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +27,11 @@ public class ActorService {
     }
 
     @PostMapping
-    public Actor createNewActor(@RequestBody @Validated ActorWithoutList actorWithoutListDto){
+    public Actor createNewActor(@RequestBody @Validated ActorWithoutIdAndListDto actorWithoutIdAndListDto){
         Actor actor = Actor.builder()
-                .actorFirstName(actorWithoutListDto.getActorFirstName())
-                .actorLastName(actorWithoutListDto.getActorLastName())
-                .description(actorWithoutListDto.getDescription())
+                .actorFirstName(actorWithoutIdAndListDto.getActorFirstName())
+                .actorLastName(actorWithoutIdAndListDto.getActorLastName())
+                .description(actorWithoutIdAndListDto.getDescription())
                 .movieListActorAppeared(new ArrayList<>())
                 .build();
         actorRepository.save(actor);
@@ -44,8 +44,9 @@ public class ActorService {
         actorRepository.findAll().forEach(actorList::add);
         List<ActorWithoutList> actorWithoutList = actorList.stream()
                 .map(actorInList -> ActorWithoutList.builder()
+                        .actorId(actorInList.getActorId())
                         .actorFirstName(actorInList.getActorFirstName())
-                        .actorLastName(actorInList.getActorFirstName())
+                        .actorLastName(actorInList.getActorLastName())
                         .description(actorInList.getDescription())
                         .build())
                 .collect(Collectors.toList());
@@ -57,6 +58,7 @@ public class ActorService {
         log.info("Actor has been shown");
         Actor actor = actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
         ActorWithoutList actorWithoutList = ActorWithoutList.builder()
+                .actorId(actor.getActorId())
                 .actorFirstName(actor.getActorFirstName())
                 .actorLastName(actor.getActorLastName())
                 .description(actor.getDescription())
@@ -68,13 +70,12 @@ public class ActorService {
         return actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
     }
     @PutMapping
-    public Actor updateActor(@RequestBody @Validated ActorDto actorDto, Long id){
+    public Actor updateActor(@RequestBody @Validated ActorWithoutIdAndListDto actorWithoutIdAndListDto, Long id){
         Actor actor = actorRepository.findById(id)
                 .orElseThrow(() -> new ActorNotFoundException(id));
-        actor.setActorFirstName(actorDto.getActorFirstName());
-        actor.setActorLastName(actorDto.getActorLastName());
-        actor.setDescription(actorDto.getDescription());
-        actor.setMovieListActorAppeared(actorDto.getMovieListActorAppeared());
+        actor.setActorFirstName(actorWithoutIdAndListDto.getActorFirstName());
+        actor.setActorLastName(actorWithoutIdAndListDto.getActorLastName());
+        actor.setDescription(actorWithoutIdAndListDto.getDescription());
         log.info("Actor has been updated");
         return actor;
     }

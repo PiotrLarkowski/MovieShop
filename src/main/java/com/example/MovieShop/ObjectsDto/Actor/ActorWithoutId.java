@@ -1,7 +1,10 @@
 package com.example.MovieShop.ObjectsDto.Actor;
 
 import com.example.MovieShop.Objects.Movie;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -9,12 +12,9 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ActorDto {
-    @NonNull
+public class ActorWithoutId {
     private String actorFirstName;
-    @NonNull
     private String actorLastName;
-    @NonNull
     private String description;
     private List<Movie> movieListActorAppeared;
 }

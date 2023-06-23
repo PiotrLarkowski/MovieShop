@@ -1,6 +1,8 @@
 package com.example.MovieShop.Objects;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.util.List;
@@ -21,5 +23,6 @@ public class Actor {
     private String actorLastName;
     private String description;
     @OneToMany(mappedBy = "movieId")
+    @JsonIgnore
     private List<Movie> movieListActorAppeared;
 }

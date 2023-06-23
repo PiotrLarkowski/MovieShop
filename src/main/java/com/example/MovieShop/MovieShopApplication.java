@@ -2,7 +2,7 @@ package com.example.MovieShop;
 
 import com.example.MovieShop.Objects.*;
 import com.example.MovieShop.ObjectsDto.*;
-import com.example.MovieShop.ObjectsDto.Actor.ActorDto;
+import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientDto;
 import com.example.MovieShop.Services.*;
@@ -18,7 +18,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 @SpringBootApplication
@@ -44,17 +43,40 @@ public class MovieShopApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		AddressDto addressDto = new AddressDto("Kraków","Fabryczna 13/2");
-		ClientDto clientDto = new ClientDto("Piotr","Larkowski",new ArrayList<>());
-		ActorWithoutList actorWithoutList = new ActorWithoutList("Tom ","Cruise","Tom Cruise, właśc. (...) Za początek wielkiej kariery aktora uważa się nominowaną do Złotego Globu rolę w filmie Ryzykowny interes.");
+		AddressDto addressDto = AddressDto.builder()
+				.city("Kraków")
+				.street("Fabryczna 13/2")
+				.build();
+		ClientDto clientDto = ClientDto.builder()
+				.clientFirstName("Piotr")
+				.clientLastName("Larkowski")
+				.clientListOfMoviesRentByClient(new ArrayList<>())
+				.build();
+		ActorWithoutIdAndListDto actorWithoutIdAndListDto = ActorWithoutIdAndListDto.builder()
+				.actorFirstName("Tom ")
+				.actorLastName("Cruise")
+				.description("Tom Cruise, właśc. (...) Za początek wielkiej kariery aktora uważa się nominowaną do Złotego Globu rolę w filmie Ryzykowny interes.")
+				.build();
 
 		Client client = clientService.createClient(clientDto);
 		Address address = addressService.createAddress(addressDto, client.getClientId());
-		Actor newActor = actorService.createNewActor(actorWithoutList);
+		Actor newActor = actorService.createNewActor(actorWithoutIdAndListDto);
 
-		MovieDto movieDto = new MovieDto(new ArrayList<Actor>(Arrays.asList(newActor)),"Ryzykowny Interes","Pod nieobecność rodziców nastolatek Joel poznaje kobietę lekkich obyczajów, Lanę, i za jej namową urządza w miejscu zamieszkania... dom publiczny.", MoviesGenres.COMEDY);
+		MovieDto movieDto = MovieDto.builder()
+				.listOfActorsInMovie(new ArrayList<Actor>(Arrays.asList(newActor)))
+				.title("Ryzykowny Interes")
+				.review("Pod nieobecność rodziców nastolatek Joel poznaje kobietę lekkich obyczajów, Lanę, i za jej namową urządza w miejscu zamieszkania... dom publiczny.")
+				.movieGenres(MoviesGenres.COMEDY)
+				.build();
+
 		Movie movie = movieService.CreateMovie(movieDto);
 		movieRentService.createMovieRent(movie.getMovieId(),client.getClientId());
+		ActorWithoutIdAndListDto actorForUpdate = ActorWithoutIdAndListDto.builder()
+				.actorFirstName("Piotr")
+				.actorLastName("Larkowski")
+				.description("description")
+				.build();
+		actorService.updateActor(actorForUpdate,1L);
 	}
 
 	@Bean
