@@ -40,14 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/actor").permitAll()
                 .antMatchers(HttpMethod.POST,"/actor").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT,"/actor").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE,"/actor/{id}").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/actor").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
                 .and()
                 .formLogin().permitAll()
                 .and()
-                .logout().permitAll();
+                .logout().permitAll()
+                .and()
+                .csrf().disable();
     }
 
 }
