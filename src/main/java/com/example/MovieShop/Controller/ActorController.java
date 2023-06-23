@@ -18,7 +18,6 @@ public class ActorController {
         this.actorService = actorService;
     }
     @PostMapping
-    @RolesAllowed({"ROLE_ADMIN"})
     public Actor createActor(@RequestBody @Validated ActorWithoutList actorWithoutList){
         return actorService.createNewActor(actorWithoutList);
     }
@@ -31,12 +30,11 @@ public class ActorController {
         return actorService.getAllActors();
     }
     @PutMapping("/{id}")
-    @RolesAllowed({"ADMIN"})
+//    @RolesAllowed({"ADMIN"})
     public Actor updateActor(@RequestBody @Validated ActorDto actorDto, @PathVariable Long id){
         return actorService.updateActor(actorDto, id);
     }
     @DeleteMapping("/{id}")
-    @RolesAllowed({"ADMIN"})
     public void deleteActor(@PathVariable Long id){
         actorService.deleteActor(id);
     }

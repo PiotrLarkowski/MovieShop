@@ -37,19 +37,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers(SWAGGER_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.GET,"/actor").permitAll()
                 .antMatchers(HttpMethod.POST,"/actor").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT,"/actor").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/actor/{id}").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
-//        http.httpBasic().;
-//        http.authorizeRequests().antMatchers(HttpMethod.POST,"/actor").hasRole("ADMIN")
-//                .antMatchers(HttpMethod.PUT,"/actor").hasRole("ADMIN")
-//                .anyRequest().permitAll()
-//                .and()
-//                .formLogin().permitAll()
-//                .and()
-//                .logout().permitAll();
+                .httpBasic()
+                .and()
+                .formLogin().permitAll()
+                .and()
+                .logout().permitAll();
     }
 
 }
