@@ -23,6 +23,6 @@ public class Client {
     @OneToMany(mappedBy="movieId")
     private List<Movie> clientListOfMoviesRentByClient;
     @OneToOne
-    @JoinColumn(name = "addressId")
+    @JoinColumn(name = "addressUUID")
     private Address address;
 }

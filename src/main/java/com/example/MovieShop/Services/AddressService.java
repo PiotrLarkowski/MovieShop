@@ -16,22 +16,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
 @Transactional
 public class AddressService{
     private final AddressRepository addressRepository;
-    private final ClientRepository clientRepository;
 
-    public AddressService(AddressRepository addressRepository, ClientRepository clientRepository) {
+    public AddressService(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
-        this.clientRepository = clientRepository;
     }
 
-    public Address createAddress(AddressDto addressDto, Long clientId){
-        Client client = clientRepository.findById(clientId).orElseThrow(() -> new ClientNotFoundException(clientId));
+    public Address createAddress(AddressDto addressDto){
         Address address = Address.builder()
+                .addressUUID(UUID.randomUUID().toString())
                 .city(addressDto.getCity())
                 .street(addressDto.getStreet())
                 .build();

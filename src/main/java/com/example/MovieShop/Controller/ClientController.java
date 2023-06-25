@@ -43,9 +43,9 @@ public class ClientController {
     public Client decreaseClientCountOfBuysByOne(@RequestBody @Validated Client client){
         return clientService.removeClientCountOfBuyByOne(client);
     }
-    @PutMapping("/address/{id}")
-    public Client updateClientAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
-        return clientService.updateClientAddress(addressDto, id);
+    @PutMapping("/address/{addressId}/{clientId}")
+    public Client updateClientAddress(@PathVariable Long addressId, @PathVariable Long clientId) {
+        return clientService.updateClientAddress(addressId, clientId);
     }
     @DeleteMapping("/{id}")
     public void deleteClient(@PathVariable Long id){

@@ -20,10 +20,13 @@ import java.util.stream.Collectors;
 @Transactional
 public class ClientService {
     private final ClientRepository clientRepository;
+    private final AddressService addressService;
 
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, AddressService addressService) {
         this.clientRepository = clientRepository;
+        this.addressService = addressService;
     }
+
     public Client createClient(ClientDto clientDto){
         Client client = Client.builder()
                 .clientFirstName(clientDto.getClientFirstName())
@@ -69,12 +72,9 @@ public class ClientService {
         log.info("Remove client buy count ");
         return client;
     }
-    public Client updateClientAddress(AddressDto addressDto, Long id){
-        Client client = getClientById(id);
-        Address address = Address.builder()
-                .city(addressDto.getCity())
-                .street(addressDto.getStreet())
-                .build();
+    public Client updateClientAddress(Long addressId, Long clientId){
+        Client client = getClientById(clientId);
+        Address address = addressService.getAddress(addressId);
         client.setAddress(address);
         log.info("Add client address");
         return client;

@@ -4,6 +4,7 @@ import com.example.MovieShop.Objects.*;
 import com.example.MovieShop.ObjectsDto.*;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
 import com.example.MovieShop.ObjectsDto.Client.ClientDto;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Movie.MovieDto;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
 import com.example.MovieShop.Services.*;
@@ -20,6 +21,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootApplication
@@ -62,23 +64,29 @@ public class MovieShopApplication implements CommandLineRunner {
         Client client = null;
 
         for (int i = 0; i < 20; i++) {
-            clientDto = ClientDto.builder()
+
+            Address address = addressService.createAddress(AddressDto.builder()
+                            .city(arrayOfCities[rand.nextInt(10)])
+                            .street(arrayOfStreets[rand.nextInt(10)])
+                            .build()
+            );
+            client = clientService.createClient(ClientDto.builder()
                     .clientFirstName(arrayOfClientFirstNames[rand.nextInt(10)])
                     .clientLastName(arrayOfClientLastName[rand.nextInt(10)])
                     .clientListOfMoviesRentByClient(new ArrayList<>())
-                    .build();
-            client = clientService.createClient(clientDto);
-            addressService.createAddress(AddressDto.builder()
-                    .city(arrayOfCities[rand.nextInt(10)])
-                    .street(arrayOfStreets[rand.nextInt(10)])
-                    .build()
-            ,client.getClientId());
+                    .build());
 
             Actor actor = actorService.createNewActor(ActorWithoutIdAndListDto.builder()
                     .actorFirstName(arrayOfClientFirstNames[rand.nextInt(10)])
                     .actorLastName(arrayOfClientLastName[rand.nextInt(10)])
                     .description("description")
                     .build());
+        }
+
+        List<Address> allAddress = addressService.getAllAddress();
+        List<ClientWithoutList> allClients = clientService.getAllClients();
+        for (int i = 0; i < allAddress.size(); i++) {
+            clientService.updateClientAddress(allAddress.get(i).getAddressId(),allClients.get(i).getClientId());
         }
 
         MovieWithoutIdAndList movieWithoutIdAndList = MovieWithoutIdAndList.builder()

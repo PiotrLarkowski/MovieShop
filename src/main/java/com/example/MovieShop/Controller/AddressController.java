@@ -22,10 +22,10 @@ public class AddressController {
     public AddressController(AddressService addressService) {
         this.addressService = addressService;
     }
-    @PostMapping(path = "/{id}")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Address createAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long clientId) throws Exception{
-        return addressService.createAddress(addressDto, clientId);
+    public Address createAddress(@RequestBody @Validated AddressDto addressDto) throws Exception{
+        return addressService.createAddress(addressDto);
     }
     @PutMapping(path = "/{id}")
     public void updateAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
