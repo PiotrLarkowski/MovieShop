@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Builder
@@ -19,7 +20,7 @@ public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long actorId;
-    private Long actorInMovieId;
+    private String actorInMovieId;
     private String actorFirstName;
     private String actorLastName;
     private String description;

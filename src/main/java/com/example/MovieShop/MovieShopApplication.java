@@ -88,6 +88,8 @@ public class MovieShopApplication implements CommandLineRunner {
                 .build();
 
         Movie movie = movieService.createMovie(movieWithoutIdAndList);
+        movie.addActorToMovie(actorService.getActorById(1L));
+
         movieRentService.createMovieRent(movie.getMovieId(), client.getClientId());
 
         ActorWithoutIdAndListDto actorForUpdate = ActorWithoutIdAndListDto.builder()
