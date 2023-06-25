@@ -1,20 +1,14 @@
 package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Movie.MovieNotFoundException;
-import com.example.MovieShop.Objects.Actor;
 import com.example.MovieShop.Objects.Movie;
-import com.example.MovieShop.Objects.MoviesGenres;
-import com.example.MovieShop.ObjectsDto.MovieDto;
-import com.example.MovieShop.Repositorys.ActorRepository;
+import com.example.MovieShop.ObjectsDto.Movie.MovieDto;
+import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
 import com.example.MovieShop.Repositorys.MovieRepository;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +24,12 @@ public class MovieService {
         this.actorService = actorService;
     }
 
-    public Movie CreateMovie(MovieDto movieDto){
+    public Movie createMovie(MovieWithoutIdAndList movieWithoutIdAndList){
         Movie movie = Movie.builder()
-                .title(movieDto.getTitle())
-                .review(movieDto.getReview())
-                .movieGenres(movieDto.getMovieGenres())
+                .title(movieWithoutIdAndList.getTitle())
+                .review(movieWithoutIdAndList.getReview())
+                .movieGenres(movieWithoutIdAndList.getMovieGenres())
+                .listOfActorsInMovie(new ArrayList<>())
                 .build();
         movieRepository.save(movie);
         log.info("Create new Movie");

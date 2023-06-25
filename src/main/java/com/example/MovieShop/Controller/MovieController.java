@@ -1,7 +1,8 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Movie;
-import com.example.MovieShop.ObjectsDto.MovieDto;
+import com.example.MovieShop.ObjectsDto.Movie.MovieDto;
+import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
 import com.example.MovieShop.Services.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -19,8 +20,8 @@ public class MovieController {
     }
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Movie createMovie(@RequestBody @Validated MovieDto movieDto){
-        return movieService.CreateMovie(movieDto);
+    public Movie createMovie(@RequestBody @Validated MovieWithoutIdAndList movieWithoutIdAndList){
+        return movieService.createMovie(movieWithoutIdAndList);
     }
     @GetMapping
     public List<Movie> getAllMovies(){

@@ -19,6 +19,7 @@ public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long actorId;
+    private Long actorInMovieId;
     private String actorFirstName;
     private String actorLastName;
     private String description;

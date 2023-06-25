@@ -1,4 +1,4 @@
-package com.example.MovieShop.ObjectsDto;
+package com.example.MovieShop.ObjectsDto.Movie;
 
 import com.example.MovieShop.Objects.MoviesGenres;
 import com.example.MovieShop.Objects.Actor;
@@ -11,8 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class MovieDto {
     private List<Actor> listOfActorsInMovie;
     private String title;

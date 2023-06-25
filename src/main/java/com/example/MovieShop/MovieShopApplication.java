@@ -3,8 +3,9 @@ package com.example.MovieShop;
 import com.example.MovieShop.Objects.*;
 import com.example.MovieShop.ObjectsDto.*;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
-import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientDto;
+import com.example.MovieShop.ObjectsDto.Movie.MovieDto;
+import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
 import com.example.MovieShop.Services.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -18,7 +19,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
@@ -81,14 +81,13 @@ public class MovieShopApplication implements CommandLineRunner {
                     .build());
         }
 
-        MovieDto movieDto = MovieDto.builder()
-                .listOfActorsInMovie(new ArrayList<Actor>())
+        MovieWithoutIdAndList movieWithoutIdAndList = MovieWithoutIdAndList.builder()
                 .title("Ryzykowny Interes")
                 .review("Pod nieobecność rodziców nastolatek Joel poznaje kobietę lekkich obyczajów, Lanę, i za jej namową urządza w miejscu zamieszkania... dom publiczny.")
                 .movieGenres(MoviesGenres.COMEDY)
                 .build();
 
-        Movie movie = movieService.CreateMovie(movieDto);
+        Movie movie = movieService.createMovie(movieWithoutIdAndList);
         movieRentService.createMovieRent(movie.getMovieId(), client.getClientId());
 
         ActorWithoutIdAndListDto actorForUpdate = ActorWithoutIdAndListDto.builder()
