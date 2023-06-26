@@ -3,9 +3,9 @@ package com.example.MovieShop.Services;
 import com.example.MovieShop.Exceptions.Client.ClientNotFoundException;
 import com.example.MovieShop.Objects.Address;
 import com.example.MovieShop.Objects.Client;
-import com.example.MovieShop.ObjectsDto.AddressDto;
 import com.example.MovieShop.ObjectsDto.Client.ClientDto;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.Repositorys.ClientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,10 +27,10 @@ public class ClientService {
         this.addressService = addressService;
     }
 
-    public Client createClient(ClientDto clientDto){
+    public Client createClient(ClientWithoutListIdAndAddress clientWithoutListAndId){
         Client client = Client.builder()
-                .clientFirstName(clientDto.getClientFirstName())
-                .clientLastName(clientDto.getClientLastName())
+                .clientFirstName(clientWithoutListAndId.getClientFirstName())
+                .clientLastName(clientWithoutListAndId.getClientLastName())
                 .clientCountOfBuy(0)
                 .clientListOfMoviesRentByClient(new ArrayList<>())
                 .build();
@@ -54,20 +54,22 @@ public class ClientService {
         log.info("Return Client by Id");
         return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
     }
-    public Client updateFirstNameandLastNameOfClient(ClientDto clientDto, Long id){
+    public Client updateFirstNameandLastNameOfClient(ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, Long id){
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new ClientNotFoundException(id));
-        client.setClientFirstName(clientDto.getClientFirstName());
-        client.setClientLastName(client.getClientLastName());
+        client.setClientFirstName(clientWithoutListIdAndAddress.getClientFirstName());
+        client.setClientLastName(clientWithoutListIdAndAddress.getClientLastName());
         log.info("Update client name");
         return client;
     }
-    public Client addClientCountOfBuyByOne(Client client){
+    public Client addClientCountOfBuyByOne(Long clientId){
+        Client client = getClientById(clientId);
         client.setClientCountOfBuy(client.getClientCountOfBuy() + 1);
-        log.info("Add client buy count ");
+        log.info("Add client buy count");
         return client;
     }
-    public Client removeClientCountOfBuyByOne(Client client){
+    public Client removeClientCountOfBuyByOne(Long clientId){
+        Client client = getClientById(clientId);
         client.setClientCountOfBuy(client.getClientCountOfBuy() - 1);
         log.info("Remove client buy count ");
         return client;

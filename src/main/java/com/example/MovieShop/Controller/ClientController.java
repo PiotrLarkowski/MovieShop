@@ -1,9 +1,9 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Client;
-import com.example.MovieShop.ObjectsDto.AddressDto;
 import com.example.MovieShop.ObjectsDto.Client.ClientDto;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.Services.ClientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -20,8 +20,8 @@ public class ClientController {
     }
     @PostMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Client createClient(@RequestBody @Validated ClientDto clientDto){
-        return clientService.createClient(clientDto);
+    public Client createClient(@RequestBody @Validated ClientWithoutListIdAndAddress clientWithoutListAndId){
+        return clientService.createClient(clientWithoutListAndId);
     }
     @GetMapping
     public List<ClientWithoutList> getAllClients(){
@@ -32,16 +32,16 @@ public class ClientController {
         return clientService.getClientById(id);
     }
     @PutMapping("/name/{id}")
-    public Client updateClientFirstAndLastName(@RequestBody @Validated ClientDto clientDto, @PathVariable Long id){
-        return clientService.updateFirstNameandLastNameOfClient(clientDto, id);
+    public Client updateClientFirstAndLastName(@RequestBody @Validated ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, @PathVariable Long id){
+        return clientService.updateFirstNameandLastNameOfClient(clientWithoutListIdAndAddress, id);
     }
-    @PutMapping("/IncreaseCountOfBuy")
-    public Client increaseClientCountOfBuysByOne(@RequestBody @Validated Client client){
-         return clientService.addClientCountOfBuyByOne(client);
+    @PutMapping("/IncreaseCountOfBuy/{clientId}")
+    public Client increaseClientCountOfBuysByOne(@PathVariable Long clientId){
+         return clientService.addClientCountOfBuyByOne(clientId);
     }
-    @PutMapping("/DecreaseCountOfBuy")
-    public Client decreaseClientCountOfBuysByOne(@RequestBody @Validated Client client){
-        return clientService.removeClientCountOfBuyByOne(client);
+    @PutMapping("/DecreaseCountOfBuy/{clientId}")
+    public Client decreaseClientCountOfBuysByOne(@PathVariable Long clientId){
+        return clientService.removeClientCountOfBuyByOne(clientId);
     }
     @PutMapping("/address/{addressId}/{clientId}")
     public Client updateClientAddress(@PathVariable Long addressId, @PathVariable Long clientId) {

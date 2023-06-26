@@ -5,7 +5,7 @@ import com.example.MovieShop.ObjectsDto.*;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
 import com.example.MovieShop.ObjectsDto.Client.ClientDto;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
-import com.example.MovieShop.ObjectsDto.Movie.MovieDto;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
 import com.example.MovieShop.Services.*;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +19,6 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -70,10 +69,9 @@ public class MovieShopApplication implements CommandLineRunner {
                             .street(arrayOfStreets[rand.nextInt(10)])
                             .build()
             );
-            client = clientService.createClient(ClientDto.builder()
+            client = clientService.createClient(ClientWithoutListIdAndAddress.builder()
                     .clientFirstName(arrayOfClientFirstNames[rand.nextInt(10)])
                     .clientLastName(arrayOfClientLastName[rand.nextInt(10)])
-                    .clientListOfMoviesRentByClient(new ArrayList<>())
                     .build());
 
             actorService.createNewActor(ActorWithoutIdAndListDto.builder()
