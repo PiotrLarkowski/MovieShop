@@ -76,7 +76,7 @@ public class MovieShopApplication implements CommandLineRunner {
                     .clientListOfMoviesRentByClient(new ArrayList<>())
                     .build());
 
-            Actor actor = actorService.createNewActor(ActorWithoutIdAndListDto.builder()
+            actorService.createNewActor(ActorWithoutIdAndListDto.builder()
                     .actorFirstName(arrayOfClientFirstNames[rand.nextInt(10)])
                     .actorLastName(arrayOfClientLastName[rand.nextInt(10)])
                     .description("description")
