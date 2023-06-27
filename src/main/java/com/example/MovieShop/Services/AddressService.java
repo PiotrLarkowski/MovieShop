@@ -1,9 +1,9 @@
 package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Address.AddressNotFoundException;
-import com.example.MovieShop.Exceptions.Client.ClientNotFoundException;
 import com.example.MovieShop.Objects.Client;
-import com.example.MovieShop.ObjectsDto.AddressDto;
+import com.example.MovieShop.ObjectsDto.Address.AddressDto;
+import com.example.MovieShop.ObjectsDto.Address.AddressWithoutId;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.Repositorys.AddressRepository;
 import com.example.MovieShop.Repositorys.ClientRepository;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -50,23 +51,38 @@ public class AddressService {
         log.info("Address has been updated");
     }
 
-    public List<Address> getAllAddress() {
+    public List<AddressWithoutId> getAllAddress() {
         ArrayList<Address> addressList = new ArrayList<>();
         addressRepository.findAll().forEach(address -> addressList.add(address));
+        List<AddressWithoutId> clientsWithoutList = addressList.stream().map(address -> AddressWithoutId.builder()
+                .addressId(address.getAddressId())
+                .street(address.getStreet())
+                .city(address.getCity())
+                .build()
+        ).collect(Collectors.toList());
         log.info("Returning Addresses list");
-        return addressList;
+        return clientsWithoutList;
     }
 
-    public Address getAddress(long id) {
+    public Address getAddressWithId(long id) {
         log.info("Returning address by id: " + id);
         return addressRepository.findById(id)
                 .orElseThrow(() -> new AddressNotFoundException(id));
+    }
+    public AddressWithoutId getAddress(long id){
+        Address address = addressRepository.findById(id)
+                .orElseThrow(() -> new AddressNotFoundException(id));
+        return AddressWithoutId.builder()
+                .addressId(address.getAddressId())
+                .city(address.getCity())
+                .street(address.getStreet())
+                .build();
     }
 
     public Address updateAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
         Address address = addressRepository.findById(id).orElseThrow(() -> new AddressNotFoundException(id));
         address.setStreet(addressDto.getStreet());
-        address.setCity(address.getCity());
+        address.setCity(addressDto.getCity());
         return address;
     }
 
@@ -74,9 +90,11 @@ public class AddressService {
         Address address = addressRepository.findById(id)
                 .orElseThrow(() -> new AddressNotFoundException(id));
         Iterable<Client> allClients = clientRepository.findAll();
-        allClients.forEach(client -> { if(client.getAddress().getAddressUUID().equals(address.getAddressUUID())) {
-            client.setAddress(null);
-        }});
+        allClients.forEach(client -> {
+            if (client.getAddress().getAddressUUID().equals(address.getAddressUUID())) {
+                client.setAddress(null);
+            }
+        });
         log.info("Deleting Address by id: " + id);
         addressRepository.delete(address);
     }

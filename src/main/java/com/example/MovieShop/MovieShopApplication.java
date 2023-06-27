@@ -1,8 +1,9 @@
 package com.example.MovieShop;
 
 import com.example.MovieShop.Objects.*;
-import com.example.MovieShop.ObjectsDto.*;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
+import com.example.MovieShop.ObjectsDto.Address.AddressDto;
+import com.example.MovieShop.ObjectsDto.Address.AddressWithoutId;
 import com.example.MovieShop.ObjectsDto.Client.ClientDto;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
@@ -81,7 +82,7 @@ public class MovieShopApplication implements CommandLineRunner {
                     .build());
         }
 
-        List<Address> allAddress = addressService.getAllAddress();
+        List<AddressWithoutId> allAddress = addressService.getAllAddress();
         List<ClientWithoutList> allClients = clientService.getAllClients();
         for (int i = 0; i < allAddress.size(); i++) {
             clientService.updateClientAddress(allAddress.get(i).getAddressId(),allClients.get(i).getClientId());

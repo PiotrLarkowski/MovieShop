@@ -85,7 +85,7 @@ public class ClientService {
     }
     public Client updateClientAddress(Long addressId, Long clientId){
         Client client = getClientById(clientId);
-        Address address = addressService.getAddress(addressId);
+        Address address = addressService.getAddressWithId(addressId);
         client.setAddress(address);
         log.info("Add client address");
         return client;

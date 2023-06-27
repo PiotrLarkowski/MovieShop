@@ -1,10 +1,10 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Address;
-import com.example.MovieShop.ObjectsDto.AddressDto;
+import com.example.MovieShop.ObjectsDto.Address.AddressDto;
+import com.example.MovieShop.ObjectsDto.Address.AddressWithoutId;
 import com.example.MovieShop.Services.AddressService;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,15 +28,15 @@ public class AddressController {
         return addressService.createAddress(addressDto);
     }
     @PutMapping(path = "/{id}")
-    public void updateAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
-        addressService.updateAddress(addressDto, id);
+    public Address updateAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
+        return addressService.updateAddress(addressDto, id);
     }
     @GetMapping
-    public List<Address> getAllAddresses(){
+    public List<AddressWithoutId> getAllAddresses(){
         return addressService.getAllAddress();
     }
     @GetMapping(path = "/{id}")
-    public Address getAddressById(@PathVariable Long id){
+    public AddressWithoutId getAddressById(@PathVariable Long id){
         return addressService.getAddress(id);
     }
     @DeleteMapping(path = "/{id}")

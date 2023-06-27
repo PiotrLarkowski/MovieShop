@@ -1,4 +1,4 @@
-package com.example.MovieShop.ObjectsDto;
+package com.example.MovieShop.ObjectsDto.Address;
 
 import lombok.*;
 
