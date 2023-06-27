@@ -3,7 +3,6 @@ package com.example.MovieShop.Services;
 import com.example.MovieShop.Exceptions.Client.ClientNotFoundException;
 import com.example.MovieShop.Objects.Address;
 import com.example.MovieShop.Objects.Client;
-import com.example.MovieShop.ObjectsDto.Client.ClientDto;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.Repositorys.ClientRepository;
@@ -50,8 +49,17 @@ public class ClientService {
         log.info("Return Clients list");
         return clientsWithoutList;
     }
-    public Client getClientById(Long id){
+    public ClientWithoutList getClientWithoutListById(Long id){
         log.info("Return Client by Id");
+        Client client = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
+        ClientWithoutList clientWithoutList = ClientWithoutList.builder()
+                .clientId(client.getClientId())
+                .clientFirstName(client.getClientFirstName())
+                .clientLastName(client.getClientLastName())
+                .build();
+        return clientWithoutList;
+    }
+    private Client getClientById(Long id){
         return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
     }
     public Client updateFirstNameandLastNameOfClient(ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, Long id){
@@ -62,6 +70,7 @@ public class ClientService {
         log.info("Update client name");
         return client;
     }
+
     public Client addClientCountOfBuyByOne(Long clientId){
         Client client = getClientById(clientId);
         client.setClientCountOfBuy(client.getClientCountOfBuy() + 1);

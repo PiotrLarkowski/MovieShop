@@ -29,8 +29,8 @@ public class MovieController {
         return movieService.getAllMovies();
     }
     @GetMapping("/{id}")
-    public Movie getMovieById(@PathVariable Long id){
-        return movieService.getMovieById(id);
+    public MovieWithoutList getMovieById(@PathVariable Long id){
+        return movieService.getMovieWithoutListById(id);
     }
     @PutMapping("/{id}")
     public Movie updateMovie(@RequestBody @Validated MovieDto movieDto, @PathVariable Long id){

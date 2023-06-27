@@ -1,7 +1,6 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Client;
-import com.example.MovieShop.ObjectsDto.Client.ClientDto;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.Services.ClientService;
@@ -28,9 +27,10 @@ public class ClientController {
         return clientService.getAllClients();
     }
     @GetMapping("/{id}")
-    public Client getClientById(@PathVariable Long id){
-        return clientService.getClientById(id);
+    public ClientWithoutList getClientById(@PathVariable Long id){
+        return clientService.getClientWithoutListById(id);
     }
+
     @PutMapping("/name/{id}")
     public Client updateClientFirstAndLastName(@RequestBody @Validated ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, @PathVariable Long id){
         return clientService.updateFirstNameandLastNameOfClient(clientWithoutListIdAndAddress, id);

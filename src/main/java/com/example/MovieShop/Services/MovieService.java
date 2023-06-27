@@ -2,7 +2,6 @@ package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Movie.MovieNotFoundException;
 import com.example.MovieShop.Objects.Movie;
-import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Movie.MovieDto;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
@@ -38,9 +37,16 @@ public class MovieService {
         log.info("Create new Movie");
         return movie;
     }
-    public Movie getMovieById(Long id){
+    public MovieWithoutList getMovieWithoutListById(Long id){
         log.info("Returning movie by id:" + id);
-        return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
+        Movie movie = movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
+        MovieWithoutList movieWithoutList = MovieWithoutList.builder()
+                .movieId(movie.getMovieId())
+                .title(movie.getTitle())
+                .review(movie.getReview())
+                .movieGenres(movie.getMovieGenres())
+                .build();
+        return movieWithoutList;
     }
     public List<MovieWithoutList> getAllMovies(){
         List<Movie> movieList = new ArrayList<>();
@@ -54,6 +60,9 @@ public class MovieService {
         ).collect(Collectors.toList());
         log.info("Returning all movies");
         return movieWithoutLists;
+    }
+    private Movie getMovieById(Long id){
+        return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
     public Movie updateMovie(MovieDto movieDto, Long id){
         Movie movieById = getMovieById(id);
