@@ -83,6 +83,7 @@ public class ClientService {
     }
     public void deleteClient(Long id){
         Client client = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
+        client.setAddress(null);
         clientRepository.delete(client);
         log.info("Delete client");
     }
