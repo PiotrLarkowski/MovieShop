@@ -64,11 +64,11 @@ public class MovieService {
     private Movie getMovieById(Long id){
         return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
-    public Movie updateMovie(MovieDto movieDto, Long id){
+    public Movie updateMovie(MovieWithoutIdAndList movieWithoutIdAndList, Long id){
         Movie movieById = getMovieById(id);
-        movieById.setMovieGenres(movieDto.getMovieGenres());
-        movieById.setTitle(movieById.getTitle());
-        movieById.setReview(movieById.getReview());
+        movieById.setTitle(movieWithoutIdAndList.getTitle());
+        movieById.setReview(movieWithoutIdAndList.getReview());
+        movieById.setMovieGenres(movieWithoutIdAndList.getMovieGenres());
         log.info("Updating movie");
         return movieById;
     }

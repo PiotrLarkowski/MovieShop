@@ -33,8 +33,8 @@ public class MovieController {
         return movieService.getMovieWithoutListById(id);
     }
     @PutMapping("/{id}")
-    public Movie updateMovie(@RequestBody @Validated MovieDto movieDto, @PathVariable Long id){
-        return movieService.updateMovie(movieDto, id);
+    public Movie updateMovie(@RequestBody @Validated MovieWithoutIdAndList movieWithoutIdAndList, @PathVariable Long id){
+        return movieService.updateMovie(movieWithoutIdAndList, id);
     }
     @PutMapping("/add/{actorId}/{movieId}")
     public Movie addActorToMovie(@PathVariable Long actorId, @PathVariable Long movieId){
