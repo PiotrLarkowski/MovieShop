@@ -2,8 +2,10 @@ package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Movie.MovieNotFoundException;
 import com.example.MovieShop.Objects.Movie;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Movie.MovieDto;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
+import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
 import com.example.MovieShop.Repositorys.MovieRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -39,11 +42,18 @@ public class MovieService {
         log.info("Returning movie by id:" + id);
         return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
-    public List<Movie> getAllMovies(){
+    public List<MovieWithoutList> getAllMovies(){
         List<Movie> movieList = new ArrayList<>();
-        movieRepository.findAll().forEach(movie -> movieList.add(movie));
+        movieRepository.findAll().forEach(movieList::add);
+        List<MovieWithoutList> movieWithoutLists = movieList.stream().map(movie -> MovieWithoutList.builder()
+                .movieId(movie.getMovieId())
+                .title(movie.getTitle())
+                .review(movie.getReview())
+                .movieGenres(movie.getMovieGenres())
+                .build()
+        ).collect(Collectors.toList());
         log.info("Returning all movies");
-        return movieList;
+        return movieWithoutLists;
     }
     public Movie updateMovie(MovieDto movieDto, Long id){
         Movie movieById = getMovieById(id);
