@@ -62,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT,"/movieRent").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/movieRent").hasRole("ADMIN")
 
+                .antMatchers(HttpMethod.GET,"/genres").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()

@@ -66,6 +66,7 @@ public class MovieService {
     }
     public Movie updateMovie(MovieWithoutIdAndList movieWithoutIdAndList, Long id){
         Movie movieById = getMovieById(id);
+        System.out.println(movieById.getListOfActorsInMovie());
         movieById.setTitle(movieWithoutIdAndList.getTitle());
         movieById.setReview(movieWithoutIdAndList.getReview());
         movieById.setMovieGenres(movieWithoutIdAndList.getMovieGenres());
