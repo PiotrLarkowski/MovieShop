@@ -15,6 +15,7 @@ import java.util.List;
 public class MoviesGenresController {
     @GetMapping
     public List<MoviesGenres> getMoviesGenresList(){
+        log.info("Returning the movie genres");
         return Arrays.asList(MoviesGenres.values());
     }
 }
