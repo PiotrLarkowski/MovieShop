@@ -16,7 +16,7 @@ import java.util.UUID;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Actor{
+public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long actorId;
@@ -27,5 +27,4 @@ public class Actor{
     @OneToMany(mappedBy = "movieId")
     @JsonIgnore
     private List<Movie> movieListActorAppeared;
-
 }

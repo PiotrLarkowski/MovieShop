@@ -2,7 +2,6 @@ package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Movie.MovieNotFoundException;
 import com.example.MovieShop.Objects.Movie;
-import com.example.MovieShop.Objects.MovieRent;
 import com.example.MovieShop.ObjectsDto.Movie.MovieDto;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
@@ -13,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,12 +19,10 @@ import java.util.stream.Collectors;
 @Transactional
 public class MovieService {
     private final MovieRepository movieRepository;
-    private final MovieRentService movieRentService;
     private final ActorService actorService;
 
-    public MovieService(MovieRepository movieRepository, MovieRentService movieRentService, ActorService actorService) {
+    public MovieService(MovieRepository movieRepository, ActorService actorService) {
         this.movieRepository = movieRepository;
-        this.movieRentService = movieRentService;
         this.actorService = actorService;
     }
 
@@ -92,12 +88,7 @@ public class MovieService {
     }
     public void deleteMovie(Long id){
         Movie movieById = getMovieById(id);
-        for (MovieRent movieRent: movieRentService.getAllMovieRent()) {
-            if(Objects.equals(movieRent.getMovieRentalId(), id)){
-                movieRentService.deleteMovieRentById(id);
-            }
-        }
         movieRepository.delete(movieById);
-        log.info("Deleting movie");
+        log.info("Deleting actor from movie");
     }
 }

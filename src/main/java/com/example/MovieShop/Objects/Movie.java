@@ -12,6 +12,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
+@EqualsAndHashCode
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
