@@ -2,6 +2,7 @@ package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Actor.ActorNotFoundException;
 import com.example.MovieShop.Objects.Actor;
+import com.example.MovieShop.Objects.Movie;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithMovieTitleList;
 import com.example.MovieShop.Repositorys.ActorRepository;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -43,19 +45,15 @@ public class ActorService {
     public List<ActorWithMovieTitleList> getAllActors(){
         List<Actor> actorList = new ArrayList<>();
         actorRepository.findAll().forEach(actorList::add);
-        List<String> listOfMovieActorAppeared = new ArrayList<>();
-        actorRepository.findAll().forEach(actor -> actor.getMovieListActorAppeared().forEach(movie -> listOfMovieActorAppeared.add(movie.getTitle())));
-
         List<ActorWithMovieTitleList> actorWithMovieTitleLists = actorList.stream()
                 .map(actorInList -> ActorWithMovieTitleList.builder()
                         .actorId(actorInList.getActorId())
                         .actorFirstName(actorInList.getActorFirstName())
                         .actorLastName(actorInList.getActorLastName())
                         .actorDescription(actorInList.getDescription())
-                        .actorMovieTitleAppearedList(listOfMovieActorAppeared)
+                        .actorMovieTitleAppearedList(actorInList.getMovieListActorAppeared().stream().map(Movie::getTitle).collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
-
         log.info("All actors has been shown");
         return actorWithMovieTitleLists;
     }
