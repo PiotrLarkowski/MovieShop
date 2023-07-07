@@ -53,24 +53,21 @@ public class MovieShopApplication implements CommandLineRunner {
                 , "Poznań", "Lublin", "Białystok"};
         String[] arrayOfStreets = {"1 Maja", "3 Maja", "11 Listopada", "Akademicka", "gen. Władysława Andersa", "Armii Krajowej",
                 "Balonowa", "Michała Bałuckiego", "Bankowa", "Tadeusza Kościuszki", "Chłodna", "Chmielna"};
-        AddressDto addressDtoForLoop = null;
-        Random rand = new Random();
-
         String[] arrayOfClientFirstNames = {"Piotr", "Pawel", "Tomek", "Krystian", "Marcin", "Sebastian", "Wiktor", "Slawek",
                 "Zbyszek", "Norbert"};
         String[] arrayOfClientLastName = {"Larkowski", "Kowalski", "Rowinski", "Gut", "Baczkowski", "Baginski", "Chacinski",
                 "Zarski", "Wojnarski", "Wolanowski"};
-        ClientDto clientDto = null;
-        Client client = null;
+
+        Random rand = new Random();
 
         for (int i = 0; i < 20; i++) {
 
-            Address address = addressService.createAddress(AddressDto.builder()
+            addressService.createAddress(AddressDto.builder()
                             .city(arrayOfCities[rand.nextInt(10)])
                             .street(arrayOfStreets[rand.nextInt(10)])
                             .build()
             );
-            client = clientService.createClient(ClientWithoutListIdAndAddress.builder()
+            clientService.createClient(ClientWithoutListIdAndAddress.builder()
                     .clientFirstName(arrayOfClientFirstNames[rand.nextInt(10)])
                     .clientLastName(arrayOfClientLastName[rand.nextInt(10)])
                     .build());
@@ -88,16 +85,14 @@ public class MovieShopApplication implements CommandLineRunner {
             clientService.updateClientAddress(allAddress.get(i).getAddressId(),allClients.get(i).getClientId());
         }
 
-        MovieWithoutIdAndList movieWithoutIdAndList = MovieWithoutIdAndList.builder()
+        Movie movie = movieService.createMovie(MovieWithoutIdAndList.builder()
                 .title("Ryzykowny Interes")
                 .review("Pod nieobecność rodziców nastolatek Joel poznaje kobietę lekkich obyczajów, Lanę, i za jej namową urządza w miejscu zamieszkania... dom publiczny.")
                 .movieGenres(MoviesGenres.COMEDY)
-                .build();
+                .build());
+        movieService.addActorToMovie(actorService.getActorById(2L).getActorId(), movie.getMovieId());
 
-        Movie movie = movieService.createMovie(movieWithoutIdAndList);
-        movie.addActorToMovie(actorService.getActorById(1L));
-
-        movieRentService.createMovieRent(movie.getMovieId(), client.getClientId());
+        movieRentService.createMovieRent(movie.getMovieId(), clientService.getClientWithoutListById(1L).getClientId());
 
         ActorWithoutIdAndListDto actorForUpdate = ActorWithoutIdAndListDto.builder()
                 .actorFirstName("Robin")

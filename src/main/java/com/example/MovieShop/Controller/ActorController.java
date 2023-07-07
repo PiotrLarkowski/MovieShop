@@ -1,9 +1,8 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Actor;
-import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutId;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
-import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
+import com.example.MovieShop.ObjectsDto.Actor.ActorWithMovieTitleList;
 import com.example.MovieShop.Services.ActorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -24,11 +23,11 @@ public class ActorController {
         return actorService.createNewActor(actorWithoutIdAndListDto);
     }
     @GetMapping("/{id}")
-    public ActorWithoutList getActorById(@PathVariable Long id){
+    public ActorWithMovieTitleList getActorById(@PathVariable Long id){
         return actorService.getActorByIdWithoutList(id);
     }
     @GetMapping
-    public List<ActorWithoutList> getAllActors(){
+    public List<ActorWithMovieTitleList> getAllActors(){
         return actorService.getAllActors();
     }
     @PutMapping("/{id}")

@@ -15,7 +15,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 public class Actor {
     @Id
@@ -26,6 +25,24 @@ public class Actor {
     private String actorLastName;
     private String description;
     @OneToMany(mappedBy = "movieId")
-    @JsonIgnore
     private List<Movie> movieListActorAppeared;
+
+    public void addMovieToActor(Movie movie){
+        movieListActorAppeared.add(movie);
+    }
+    public void removeMovieFromActor(Movie movie){
+        movieListActorAppeared.remove(movie);
+    }
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "actorId=" + actorId +
+                ", actorInMovieId='" + actorInMovieId + '\'' +
+                ", actorFirstName='" + actorFirstName + '\'' +
+                ", actorLastName='" + actorLastName + '\'' +
+                ", description='" + description + '\'' +
+                ", movieListActorAppeared=" + movieListActorAppeared +
+                '}';
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Movie.MovieNotFoundException;
+import com.example.MovieShop.Objects.Actor;
 import com.example.MovieShop.Objects.Movie;
 import com.example.MovieShop.ObjectsDto.Movie.MovieDto;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
@@ -76,7 +77,9 @@ public class MovieService {
     }
     public Movie addActorToMovie(Long actorId, Long movieId){
         Movie movieById = getMovieById(movieId);
-        movieById.addActorToMovie(actorService.getActorById(actorId));
+        Actor actorById = actorService.getActorById(actorId);
+        movieById.addActorToMovie(actorById);
+        actorById.addMovieToActor(movieById);
         log.info("Adding actor to movie");
         return movieById;
     }

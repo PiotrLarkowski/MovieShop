@@ -2,9 +2,8 @@ package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Actor.ActorNotFoundException;
 import com.example.MovieShop.Objects.Actor;
-import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutId;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
-import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutList;
+import com.example.MovieShop.ObjectsDto.Actor.ActorWithMovieTitleList;
 import com.example.MovieShop.Repositorys.ActorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,31 +40,38 @@ public class ActorService {
         return(actor);
     }
     @GetMapping()
-    public List<ActorWithoutList> getAllActors(){
+    public List<ActorWithMovieTitleList> getAllActors(){
         List<Actor> actorList = new ArrayList<>();
         actorRepository.findAll().forEach(actorList::add);
-        List<ActorWithoutList> actorWithoutList = actorList.stream()
-                .map(actorInList -> ActorWithoutList.builder()
+        List<String> listOfMovieActorAppeared = new ArrayList<>();
+        actorRepository.findAll().forEach(actor -> actor.getMovieListActorAppeared().forEach(movie -> listOfMovieActorAppeared.add(movie.getTitle())));
+
+        List<ActorWithMovieTitleList> actorWithMovieTitleLists = actorList.stream()
+                .map(actorInList -> ActorWithMovieTitleList.builder()
                         .actorId(actorInList.getActorId())
                         .actorFirstName(actorInList.getActorFirstName())
                         .actorLastName(actorInList.getActorLastName())
-                        .description(actorInList.getDescription())
+                        .actorDescription(actorInList.getDescription())
+                        .actorMovieTitleAppearedList(listOfMovieActorAppeared)
                         .build())
                 .collect(Collectors.toList());
+
         log.info("All actors has been shown");
-        return actorWithoutList;
+        return actorWithMovieTitleLists;
     }
     @GetMapping(path="/{id}")
-    public ActorWithoutList getActorByIdWithoutList(@PathVariable Long id){
+    public ActorWithMovieTitleList getActorByIdWithoutList(@PathVariable Long id){
         log.info("Actor has been shown");
         Actor actor = actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
-        ActorWithoutList actorWithoutList = ActorWithoutList.builder()
+        List<String> listOfMovieActorAppeared = new ArrayList<>();
+        actor.getMovieListActorAppeared().forEach(movie -> listOfMovieActorAppeared.add(movie.getTitle()));
+        return ActorWithMovieTitleList.builder()
                 .actorId(actor.getActorId())
                 .actorFirstName(actor.getActorFirstName())
                 .actorLastName(actor.getActorLastName())
-                .description(actor.getDescription())
+                .actorDescription(actor.getDescription())
+                .actorMovieTitleAppearedList(listOfMovieActorAppeared)
                 .build();
-        return actorWithoutList;
     }
     public Actor getActorById(@PathVariable Long id){
         log.info("Actor has been shown");
@@ -73,8 +79,7 @@ public class ActorService {
     }
     @PutMapping
     public Actor updateActor(@RequestBody @Validated ActorWithoutIdAndListDto actorWithoutIdAndListDto, Long id){
-        Actor actor = actorRepository.findById(id)
-                .orElseThrow(() -> new ActorNotFoundException(id));
+        Actor actor = getActorById(id);
         actor.setActorFirstName(actorWithoutIdAndListDto.getActorFirstName());
         actor.setActorLastName(actorWithoutIdAndListDto.getActorLastName());
         actor.setDescription(actorWithoutIdAndListDto.getDescription());
@@ -83,7 +88,7 @@ public class ActorService {
     }
     @DeleteMapping(path ="{id}")
     public void deleteActor(@PathVariable Long id){
-        actorRepository.delete(actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id)));
+        actorRepository.delete(getActorById(id));
         log.info("Actor has been deleted");
     }
 }

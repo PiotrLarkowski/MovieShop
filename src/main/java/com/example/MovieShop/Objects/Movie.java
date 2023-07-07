@@ -12,7 +12,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
 public class Movie {
     @Id
@@ -30,5 +29,16 @@ public class Movie {
     }
     public void removeActorToMovie(Actor actor){
         listOfActorsInMovie.remove(actor);
+    }
+
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "movieId=" + movieId +
+                ", listOfActorsInMovie=" + listOfActorsInMovie +
+                ", title='" + title + '\'' +
+                ", review='" + review + '\'' +
+                ", movieGenres=" + movieGenres +
+                '}';
     }
 }
