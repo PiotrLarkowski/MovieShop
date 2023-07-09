@@ -24,6 +24,7 @@ public class ClientController {
     }
     @GetMapping
     public List<ClientWithoutList> getAllClients(){
+        //TODO showing client list with address with UUID
         return clientService.getAllClients();
     }
     @GetMapping("/{id}")
@@ -33,10 +34,12 @@ public class ClientController {
 
     @PutMapping("/name/{id}")
     public Client updateClientFirstAndLastName(@RequestBody @Validated ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, @PathVariable Long id){
+        //TODO function works wile Client don't have rent movie
         return clientService.updateFirstNameandLastNameOfClient(clientWithoutListIdAndAddress, id);
     }
     @PutMapping("/IncreaseCountOfBuy/{clientId}")
     public Client increaseClientCountOfBuysByOne(@PathVariable Long clientId){
+        //TODO funcion work while client don't have rent movie list
          return clientService.addClientCountOfBuyByOne(clientId);
     }
     @PutMapping("/DecreaseCountOfBuy/{clientId}")
@@ -45,6 +48,7 @@ public class ClientController {
     }
     @PutMapping("/address/{addressId}/{clientId}")
     public Client updateClientAddress(@PathVariable Long addressId, @PathVariable Long clientId) {
+        //TODO while add address to client address have UUID
         return clientService.updateClientAddress(addressId, clientId);
     }
     @DeleteMapping("/{id}")
