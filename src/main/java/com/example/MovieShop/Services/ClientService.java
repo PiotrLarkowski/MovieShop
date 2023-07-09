@@ -57,6 +57,7 @@ public class ClientService {
                 .clientId(client.getClientId())
                 .clientFirstName(client.getClientFirstName())
                 .clientLastName(client.getClientLastName())
+                .address(client.getAddress())
                 .build();
         return clientWithoutList;
     }

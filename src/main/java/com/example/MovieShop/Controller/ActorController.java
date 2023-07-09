@@ -32,6 +32,7 @@ public class ActorController {
     }
     @PutMapping("/{id}")
     public Actor updateActor(@RequestBody @Validated ActorWithoutIdAndListDto actorWithoutIdAndListDto, @PathVariable Long id){
+        //TODO Actors cant be deleted when they have movie where they play
         return actorService.updateActor(actorWithoutIdAndListDto, id);
     }
     @DeleteMapping("/{id}")
