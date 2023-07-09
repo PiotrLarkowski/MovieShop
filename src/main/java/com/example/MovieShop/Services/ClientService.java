@@ -38,12 +38,13 @@ public class ClientService {
         return client;
     }
     public List<ClientWithoutList> getAllClients(){
-        ArrayList<Client> listOfClient = new ArrayList();
-        clientRepository.findAll().forEach(client -> listOfClient.add(client));
+        ArrayList<Client> listOfClient = new ArrayList<>();
+        clientRepository.findAll().forEach(listOfClient::add);
         List<ClientWithoutList> clientsWithoutList = listOfClient.stream().map(client -> ClientWithoutList.builder()
                 .clientId(client.getClientId())
                 .clientFirstName(client.getClientFirstName())
                 .clientLastName(client.getClientLastName())
+                .address(client.getAddress())
                 .build()
         ).collect(Collectors.toList());
         log.info("Return Clients list");
