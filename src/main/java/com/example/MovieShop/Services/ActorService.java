@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @Slf4j
@@ -51,7 +50,8 @@ public class ActorService {
                         .actorFirstName(actorInList.getActorFirstName())
                         .actorLastName(actorInList.getActorLastName())
                         .actorDescription(actorInList.getDescription())
-                        .actorMovieTitleAppearedList(actorInList.getMovieListActorAppeared().stream().map(Movie::getTitle).collect(Collectors.toList()))
+                        .actorMovieTitleAppearedList(actorInList.getMovieListActorAppeared())
+//                        .actorMovieTitleAppearedList(actorInList.getMovieListActorAppeared().stream().map(Movie::getTitle).collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
         log.info("All actors has been shown");
@@ -61,14 +61,14 @@ public class ActorService {
     public ActorWithMovieTitleList getActorByIdWithoutList(@PathVariable Long id){
         log.info("Actor has been shown");
         Actor actor = actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
-        List<String> listOfMovieActorAppeared = new ArrayList<>();
-        actor.getMovieListActorAppeared().forEach(movie -> listOfMovieActorAppeared.add(movie.getTitle()));
+//        List<String> listOfMovieActorAppeared = new ArrayList<>();
+//        actor.getMovieListActorAppeared().forEach(movie -> listOfMovieActorAppeared.add(movie.getTitle()));
         return ActorWithMovieTitleList.builder()
                 .actorId(actor.getActorId())
                 .actorFirstName(actor.getActorFirstName())
                 .actorLastName(actor.getActorLastName())
                 .actorDescription(actor.getDescription())
-                .actorMovieTitleAppearedList(listOfMovieActorAppeared)
+                .actorMovieTitleAppearedList(actor.getMovieListActorAppeared())
                 .build();
     }
     public Actor getActorById(@PathVariable Long id){

@@ -79,7 +79,7 @@ public class MovieService {
         Movie movieById = getMovieById(movieId);
         Actor actorById = actorService.getActorById(actorId);
         movieById.addActorToMovie(actorById);
-        actorById.addMovieToActor(movieById);
+        actorById.addMovieToActor(movieById.getTitle());
         log.info("Adding actor to movie");
         return movieById;
     }

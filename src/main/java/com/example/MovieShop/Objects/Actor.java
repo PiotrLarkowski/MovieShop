@@ -2,12 +2,9 @@ package com.example.MovieShop.Objects;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Builder
@@ -24,14 +21,15 @@ public class Actor {
     private String actorFirstName;
     private String actorLastName;
     private String description;
-    @OneToMany(mappedBy = "movieId")
-    private List<Movie> movieListActorAppeared;
+//    @OneToMany(mappedBy = "movieId")
+    @ElementCollection(targetClass=String.class)
+    private List<String> movieListActorAppeared;
 
-    public void addMovieToActor(Movie movie){
-        movieListActorAppeared.add(movie);
+    public void addMovieToActor(String title){
+        movieListActorAppeared.add(title);
     }
-    public void removeMovieFromActor(Movie movie){
-        movieListActorAppeared.remove(movie);
+    public void removeMovieFromActor(String title){
+        movieListActorAppeared.remove(title);
     }
 
     @Override
