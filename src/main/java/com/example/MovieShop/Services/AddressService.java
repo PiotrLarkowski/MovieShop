@@ -79,11 +79,15 @@ public class AddressService {
                 .build();
     }
 
-    public Address updateAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
+    public AddressWithoutId updateAddress(@RequestBody @Validated AddressDto addressDto, @PathVariable Long id) {
         Address address = addressRepository.findById(id).orElseThrow(() -> new AddressNotFoundException(id));
         address.setStreet(addressDto.getStreet());
         address.setCity(addressDto.getCity());
-        return address;
+        return AddressWithoutId.builder()
+                .addressId(address.getAddressId())
+                .street(address.getStreet())
+                .city(address.getCity())
+                .build();
     }
 
     public void deleteAddress(long id) {
