@@ -29,7 +29,7 @@ public class ClientController {
         return clientService.getAllClients();
     }
     @GetMapping("/{id}")
-    public ClientWithoutList getClientById(@PathVariable Long id){
+    public ClientWithoutAddressId getClientById(@PathVariable Long id){
         return clientService.getClientWithoutListById(id);
     }
 
@@ -40,7 +40,7 @@ public class ClientController {
     }
     @PutMapping("/IncreaseCountOfBuy/{clientId}")
     public Client increaseClientCountOfBuysByOne(@PathVariable Long clientId){
-        //TODO funcion work while client don't have rent movie list
+        //TODO function work while client don't have rent movie list
          return clientService.addClientCountOfBuyByOne(clientId);
     }
     @PutMapping("/DecreaseCountOfBuy/{clientId}")

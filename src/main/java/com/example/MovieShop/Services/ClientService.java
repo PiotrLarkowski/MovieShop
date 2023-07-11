@@ -48,21 +48,10 @@ public class ClientService {
                 .clientLastName(client.getClientLastName())
                 .address(client.getAddress())
                 .build()).collect(Collectors.toList());
-//        List<ClientWithoutAddressId> collectOfClientsWithoutAddressId = clientWithoutId.stream().map(client -> ClientWithoutAddressId.builder()
-//                .clientId(client.getClientId())
-//                .clientFirstName(client.getClientFirstName())
-//                .clientLastName(client.getClientLastName())
-//                .addressWithoutId(AddressWithoutId.builder()
-//                                .addressId(client.getAddress().getAddressId())
-//                                .street(client.getAddress().getStreet())
-//                                .city(client.getAddress().getCity())
-//                                .build())
-//                .build()
-//        ).collect(Collectors.toList());
         log.info("Return Clients list");
         return clientWithoutId;
     }
-    public ClientWithoutList getClientWithoutListById(Long id){
+    public ClientWithoutAddressId getClientWithoutListById(Long id){
         log.info("Return Client by Id");
         Client client = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
         ClientWithoutList clientWithoutList = ClientWithoutList.builder()
@@ -71,7 +60,17 @@ public class ClientService {
                 .clientLastName(client.getClientLastName())
                 .address(client.getAddress())
                 .build();
-        return clientWithoutList;
+        ClientWithoutAddressId clientWithoutAddressId = ClientWithoutAddressId.builder()
+                .clientId(clientWithoutList.getClientId())
+                .clientFirstName(clientWithoutList.getClientFirstName())
+                .clientLastName(clientWithoutList.getClientLastName())
+                .addressWithoutId(AddressWithoutId.builder()
+                        .addressId(clientWithoutList.getAddress().getAddressId())
+                        .city(clientWithoutList.getAddress().getCity())
+                        .street(clientWithoutList.getAddress().getStreet())
+                        .build())
+                .build();
+        return clientWithoutAddressId;
     }
     private Client getClientById(Long id){
         return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
