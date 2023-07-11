@@ -5,6 +5,7 @@ import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
 import com.example.MovieShop.ObjectsDto.Address.AddressDto;
 import com.example.MovieShop.ObjectsDto.Address.AddressWithoutId;
 import com.example.MovieShop.ObjectsDto.Client.ClientDto;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutAddressId;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;

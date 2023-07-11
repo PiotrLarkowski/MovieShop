@@ -3,6 +3,8 @@ package com.example.MovieShop.Services;
 import com.example.MovieShop.Exceptions.Client.ClientNotFoundException;
 import com.example.MovieShop.Objects.Address;
 import com.example.MovieShop.Objects.Client;
+import com.example.MovieShop.ObjectsDto.Address.AddressWithoutId;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutAddressId;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.Repositorys.ClientRepository;
@@ -40,15 +42,25 @@ public class ClientService {
     public List<ClientWithoutList> getAllClients(){
         ArrayList<Client> listOfClient = new ArrayList<>();
         clientRepository.findAll().forEach(listOfClient::add);
-        List<ClientWithoutList> clientsWithoutList = listOfClient.stream().map(client -> ClientWithoutList.builder()
+        List<ClientWithoutList> clientWithoutId = listOfClient.stream().map(client -> ClientWithoutList.builder()
                 .clientId(client.getClientId())
                 .clientFirstName(client.getClientFirstName())
                 .clientLastName(client.getClientLastName())
                 .address(client.getAddress())
-                .build()
-        ).collect(Collectors.toList());
+                .build()).collect(Collectors.toList());
+//        List<ClientWithoutAddressId> collectOfClientsWithoutAddressId = clientWithoutId.stream().map(client -> ClientWithoutAddressId.builder()
+//                .clientId(client.getClientId())
+//                .clientFirstName(client.getClientFirstName())
+//                .clientLastName(client.getClientLastName())
+//                .addressWithoutId(AddressWithoutId.builder()
+//                                .addressId(client.getAddress().getAddressId())
+//                                .street(client.getAddress().getStreet())
+//                                .city(client.getAddress().getCity())
+//                                .build())
+//                .build()
+//        ).collect(Collectors.toList());
         log.info("Return Clients list");
-        return clientsWithoutList;
+        return clientWithoutId;
     }
     public ClientWithoutList getClientWithoutListById(Long id){
         log.info("Return Client by Id");

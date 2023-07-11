@@ -1,6 +1,7 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Client;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutAddressId;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.Services.ClientService;
