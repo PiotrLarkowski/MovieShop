@@ -14,8 +14,8 @@ public class ClientWithoutList {
     private Long clientId;
     private String clientFirstName;
     private String clientLastName;
-    private List<String> clientTitleListOfMoviesRentByClient;
     private Address address;
+    private List<String> clientTitleListOfMoviesRentByClient;
 
     public void addTitleToMovieList(String title){
         clientTitleListOfMoviesRentByClient.add(title);

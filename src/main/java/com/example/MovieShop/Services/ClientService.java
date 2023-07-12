@@ -58,7 +58,6 @@ public class ClientService {
         return clientWithoutList;
     }
     public ClientWithoutAddressId getClientWithoutListById(Long id){
-        log.info("Return Client by Id");
         Client client = clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
         ClientWithoutList clientWithoutList = ClientWithoutList.builder()
                 .clientId(client.getClientId())
@@ -66,16 +65,22 @@ public class ClientService {
                 .clientLastName(client.getClientLastName())
                 .address(client.getAddress())
                 .build();
+        List<String> titleList = new ArrayList<>();
+        for (int i = 0; i < client.getClientListOfMoviesRentByClient().size(); i++) {
+            titleList.add(client.getClientListOfMoviesRentByClient().get(i).getTitle());
+        }
         ClientWithoutAddressId clientWithoutAddressId = ClientWithoutAddressId.builder()
                 .clientId(clientWithoutList.getClientId())
                 .clientFirstName(clientWithoutList.getClientFirstName())
                 .clientLastName(clientWithoutList.getClientLastName())
+                .clientTitleListOfMoviesRentByClient(titleList)
                 .addressWithoutId(AddressWithoutId.builder()
                         .addressId(clientWithoutList.getAddress().getAddressId())
                         .city(clientWithoutList.getAddress().getCity())
                         .street(clientWithoutList.getAddress().getStreet())
                         .build())
                 .build();
+        log.info("Return Client by Id");
         return clientWithoutAddressId;
     }
     private Client getClientById(Long id){
