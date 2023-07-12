@@ -46,8 +46,14 @@ public class ClientService {
                 .clientId(client.getClientId())
                 .clientFirstName(client.getClientFirstName())
                 .clientLastName(client.getClientLastName())
+                .clientTitleListOfMoviesRentByClient(new ArrayList<>())
                 .address(client.getAddress())
                 .build()).collect(Collectors.toList());
+        for (int i = 0; i < clientWithoutList.size(); i++) {
+            for (int j = 0; j < listOfClient.get(i).getClientListOfMoviesRentByClient().size(); j++) {
+                clientWithoutList.get(i).addTitleToMovieList(listOfClient.get(i).getClientListOfMoviesRentByClient().get(i).getTitle());
+            }
+        }
         log.info("Return Clients list");
         return clientWithoutList;
     }
@@ -75,13 +81,20 @@ public class ClientService {
     private Client getClientById(Long id){
         return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
     }
-    public Client updateFirstNameandLastNameOfClient(ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, Long id){
+    public ClientWithoutList updateFirstNameandLastNameOfClient(ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, Long id){
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new ClientNotFoundException(id));
-        client.setClientFirstName(clientWithoutListIdAndAddress.getClientFirstName());
-        client.setClientLastName(clientWithoutListIdAndAddress.getClientLastName());
+        List<String> movieTitles = new ArrayList<>();
+        client.getClientListOfMoviesRentByClient().forEach(Movie -> movieTitles.add(Movie.getTitle()));
+        ClientWithoutList clientWithoutList = ClientWithoutList.builder()
+                .clientId(client.getClientId())
+                .clientFirstName(clientWithoutListIdAndAddress.getClientFirstName())
+                .clientLastName(clientWithoutListIdAndAddress.getClientLastName())
+                .clientTitleListOfMoviesRentByClient(movieTitles)
+                .address(client.getAddress())
+                .build();
         log.info("Update client name");
-        return client;
+        return clientWithoutList;
     }
 
     public Client addClientCountOfBuyByOne(Long clientId){

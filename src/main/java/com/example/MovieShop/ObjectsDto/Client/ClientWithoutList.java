@@ -1,8 +1,6 @@
 package com.example.MovieShop.ObjectsDto.Client;
 
 import com.example.MovieShop.Objects.Address;
-import com.example.MovieShop.Objects.Movie;
-import com.example.MovieShop.ObjectsDto.Address.AddressWithoutId;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,5 +14,10 @@ public class ClientWithoutList {
     private Long clientId;
     private String clientFirstName;
     private String clientLastName;
+    private List<String> clientTitleListOfMoviesRentByClient;
     private Address address;
+
+    public void addTitleToMovieList(String title){
+        clientTitleListOfMoviesRentByClient.add(title);
+    }
 }

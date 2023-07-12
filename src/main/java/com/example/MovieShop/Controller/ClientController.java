@@ -34,7 +34,7 @@ public class ClientController {
     }
 
     @PutMapping("/name/{id}")
-    public Client updateClientFirstAndLastName(@RequestBody @Validated ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, @PathVariable Long id){
+    public ClientWithoutList updateClientFirstAndLastName(@RequestBody @Validated ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, @PathVariable Long id){
         //TODO function works wile Client don't have rent movie
         return clientService.updateFirstNameandLastNameOfClient(clientWithoutListIdAndAddress, id);
     }
