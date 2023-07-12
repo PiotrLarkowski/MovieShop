@@ -5,6 +5,7 @@ import com.example.MovieShop.ObjectsDto.Client.ClientWithoutAddressId;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.Services.ClientService;
+import com.example.MovieShop.Services.ClientWithoutId;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,6 @@ public class ClientController {
     }
     @GetMapping
     public List<ClientWithoutList> getAllClients(){
-        //TODO showing client list with address with UUID
         return clientService.getAllClients();
     }
     @GetMapping("/{id}")

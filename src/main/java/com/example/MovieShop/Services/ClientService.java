@@ -42,14 +42,14 @@ public class ClientService {
     public List<ClientWithoutList> getAllClients(){
         ArrayList<Client> listOfClient = new ArrayList<>();
         clientRepository.findAll().forEach(listOfClient::add);
-        List<ClientWithoutList> clientWithoutId = listOfClient.stream().map(client -> ClientWithoutList.builder()
+        List<ClientWithoutList> clientWithoutList = listOfClient.stream().map(client -> ClientWithoutList.builder()
                 .clientId(client.getClientId())
                 .clientFirstName(client.getClientFirstName())
                 .clientLastName(client.getClientLastName())
                 .address(client.getAddress())
                 .build()).collect(Collectors.toList());
         log.info("Return Clients list");
-        return clientWithoutId;
+        return clientWithoutList;
     }
     public ClientWithoutAddressId getClientWithoutListById(Long id){
         log.info("Return Client by Id");
