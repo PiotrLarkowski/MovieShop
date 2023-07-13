@@ -6,7 +6,6 @@ import com.example.MovieShop.ObjectsDto.Client.ClientWithoutAddressId;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.Services.ClientService;
-import com.example.MovieShop.Services.ClientWithoutId;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -40,12 +39,11 @@ public class ClientController {
     }
     @PutMapping("/IncreaseCountOfBuy/{clientId}")
     public ClientWithCountOfRent increaseClientCountOfBuysByOne(@PathVariable Long clientId){
-        //TODO function work while client don't have rent movie list
          return clientService.addClientCountOfBuyByOne(clientId);
     }
     @PutMapping("/DecreaseCountOfBuy/{clientId}")
-    public Client decreaseClientCountOfBuysByOne(@PathVariable Long clientId){
-        return clientService.removeClientCountOfBuyByOne(clientId);
+    public ClientWithCountOfRent decreaseClientCountOfBuysByOne(@PathVariable Long clientId){
+        return clientService.lowerClientCountOfBuyByOne(clientId);
     }
     @PutMapping("/address/{addressId}/{clientId}")
     public Client updateClientAddress(@PathVariable Long addressId, @PathVariable Long clientId) {

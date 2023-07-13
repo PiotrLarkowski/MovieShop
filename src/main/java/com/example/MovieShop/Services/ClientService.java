@@ -115,11 +115,17 @@ public class ClientService {
         log.info("Add client buy count");
         return clientWithCountOfRent;
     }
-    public Client removeClientCountOfBuyByOne(Long clientId){
+    public ClientWithCountOfRent lowerClientCountOfBuyByOne(Long clientId){
         Client client = getClientById(clientId);
-        client.setClientCountOfRent(client.getClientCountOfRent() - 1);
-        log.info("Remove client buy count ");
-        return client;
+        client.loverClientCountOfRent();
+        ClientWithCountOfRent clientWithCountOfRent = ClientWithCountOfRent.builder()
+                .clientId(client.getClientId())
+                .clientFirstName(client.getClientFirstName())
+                .clientLastName(client.getClientLastName())
+                .clientCountOfBuy(client.getClientCountOfRent())
+                .build();
+        log.info("Lover client buy count ");
+        return clientWithCountOfRent;
     }
     public Client updateClientAddress(Long addressId, Long clientId){
         Client client = getClientById(clientId);

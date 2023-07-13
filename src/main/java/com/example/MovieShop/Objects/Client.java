@@ -29,4 +29,7 @@ public class Client {
     public void addClientCountOfRent(){
         clientCountOfRent++;
     }
+    public void loverClientCountOfRent(){
+        clientCountOfRent--;
+    }
 }
