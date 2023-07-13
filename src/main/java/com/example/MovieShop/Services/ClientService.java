@@ -4,6 +4,7 @@ import com.example.MovieShop.Exceptions.Client.ClientNotFoundException;
 import com.example.MovieShop.Objects.Address;
 import com.example.MovieShop.Objects.Client;
 import com.example.MovieShop.ObjectsDto.Address.AddressWithoutId;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithCountOfRent;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutAddressId;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
@@ -32,7 +33,7 @@ public class ClientService {
         Client client = Client.builder()
                 .clientFirstName(clientWithoutListAndId.getClientFirstName())
                 .clientLastName(clientWithoutListAndId.getClientLastName())
-                .clientCountOfBuy(0)
+                .clientCountOfRent(0)
                 .clientListOfMoviesRentByClient(new ArrayList<>())
                 .build();
         clientRepository.save(client);
@@ -102,15 +103,21 @@ public class ClientService {
         return clientWithoutList;
     }
 
-    public Client addClientCountOfBuyByOne(Long clientId){
+    public ClientWithCountOfRent addClientCountOfBuyByOne(Long clientId){
         Client client = getClientById(clientId);
-        client.setClientCountOfBuy(client.getClientCountOfBuy() + 1);
+        client.addClientCountOfRent();
+        ClientWithCountOfRent clientWithCountOfRent = ClientWithCountOfRent.builder()
+                .clientId(client.getClientId())
+                .clientFirstName(client.getClientFirstName())
+                .clientLastName(client.getClientLastName())
+                .clientCountOfBuy(client.getClientCountOfRent())
+                .build();
         log.info("Add client buy count");
-        return client;
+        return clientWithCountOfRent;
     }
     public Client removeClientCountOfBuyByOne(Long clientId){
         Client client = getClientById(clientId);
-        client.setClientCountOfBuy(client.getClientCountOfBuy() - 1);
+        client.setClientCountOfRent(client.getClientCountOfRent() - 1);
         log.info("Remove client buy count ");
         return client;
     }

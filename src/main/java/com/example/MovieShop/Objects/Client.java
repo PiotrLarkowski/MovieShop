@@ -17,7 +17,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long clientId;
-    private int clientCountOfBuy;
+    private int clientCountOfRent;
     private String clientFirstName;
     private String clientLastName;
     @OneToMany(mappedBy="movieId")
@@ -25,4 +25,8 @@ public class Client {
     @OneToOne
     @JoinColumn(name = "addressUUID")
     private Address address;
+
+    public void addClientCountOfRent(){
+        clientCountOfRent++;
+    }
 }

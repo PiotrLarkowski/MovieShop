@@ -1,6 +1,7 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Client;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithCountOfRent;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutAddressId;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
@@ -35,11 +36,10 @@ public class ClientController {
 
     @PutMapping("/name/{id}")
     public ClientWithoutList updateClientFirstAndLastName(@RequestBody @Validated ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, @PathVariable Long id){
-        //TODO function works wile Client don't have rent movie
         return clientService.updateFirstNameandLastNameOfClient(clientWithoutListIdAndAddress, id);
     }
     @PutMapping("/IncreaseCountOfBuy/{clientId}")
-    public Client increaseClientCountOfBuysByOne(@PathVariable Long clientId){
+    public ClientWithCountOfRent increaseClientCountOfBuysByOne(@PathVariable Long clientId){
         //TODO function work while client don't have rent movie list
          return clientService.addClientCountOfBuyByOne(clientId);
     }
