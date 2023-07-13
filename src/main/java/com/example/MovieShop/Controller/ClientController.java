@@ -37,14 +37,6 @@ public class ClientController {
     public ClientWithoutList updateClientFirstAndLastName(@RequestBody @Validated ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, @PathVariable Long id){
         return clientService.updateFirstNameandLastNameOfClient(clientWithoutListIdAndAddress, id);
     }
-    @PutMapping("/IncreaseCountOfBuy/{clientId}")
-    public ClientWithCountOfRent increaseClientCountOfBuysByOne(@PathVariable Long clientId){
-         return clientService.addClientCountOfBuyByOne(clientId);
-    }
-    @PutMapping("/DecreaseCountOfBuy/{clientId}")
-    public ClientWithCountOfRent decreaseClientCountOfBuysByOne(@PathVariable Long clientId){
-        return clientService.lowerClientCountOfBuyByOne(clientId);
-    }
     @PutMapping("/address/{addressId}/{clientId}")
     public Client updateClientAddress(@PathVariable Long addressId, @PathVariable Long clientId) {
         return clientService.updateClientAddress(addressId, clientId);

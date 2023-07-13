@@ -62,7 +62,7 @@ public class MovieService {
         log.info("Returning all movies");
         return movieWithoutLists;
     }
-    private Movie getMovieById(Long id){
+    public Movie getMovieById(Long id){
         return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
     public Movie updateMovie(MovieWithoutIdAndList movieWithoutIdAndList, Long id){

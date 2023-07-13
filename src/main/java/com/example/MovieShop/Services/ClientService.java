@@ -87,7 +87,7 @@ public class ClientService {
         log.info("Return Client by Id");
         return clientWithoutAddressId;
     }
-    private Client getClientById(Long id){
+    public Client getClientById(Long id){
         return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
     }
     public ClientWithoutList updateFirstNameandLastNameOfClient(ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, Long id){
