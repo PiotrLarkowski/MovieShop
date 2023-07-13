@@ -47,6 +47,7 @@ public class ClientService {
                 .clientId(client.getClientId())
                 .clientFirstName(client.getClientFirstName())
                 .clientLastName(client.getClientLastName())
+                .clientCountOfRent(client.getClientCountOfRent())
                 .clientTitleListOfMoviesRentByClient(new ArrayList<>())
                 .address(client.getAddress())
                 .build()).collect(Collectors.toList());
@@ -64,6 +65,7 @@ public class ClientService {
                 .clientId(client.getClientId())
                 .clientFirstName(client.getClientFirstName())
                 .clientLastName(client.getClientLastName())
+                .clientCountOfRent(client.getClientCountOfRent())
                 .address(client.getAddress())
                 .build();
         List<String> titleList = new ArrayList<>();
@@ -75,6 +77,7 @@ public class ClientService {
                 .clientFirstName(clientWithoutList.getClientFirstName())
                 .clientLastName(clientWithoutList.getClientLastName())
                 .clientTitleListOfMoviesRentByClient(titleList)
+                .clientCountOfRent(client.getClientCountOfRent())
                 .addressWithoutId(AddressWithoutId.builder()
                         .addressId(clientWithoutList.getAddress().getAddressId())
                         .city(clientWithoutList.getAddress().getCity())

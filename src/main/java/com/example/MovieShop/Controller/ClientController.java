@@ -47,7 +47,6 @@ public class ClientController {
     }
     @PutMapping("/address/{addressId}/{clientId}")
     public Client updateClientAddress(@PathVariable Long addressId, @PathVariable Long clientId) {
-        //TODO while add address to client address have UUID
         return clientService.updateClientAddress(addressId, clientId);
     }
     @DeleteMapping("/{id}")

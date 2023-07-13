@@ -14,6 +14,7 @@ public class ClientWithoutList {
     private Long clientId;
     private String clientFirstName;
     private String clientLastName;
+    private int clientCountOfRent;
     private Address address;
     private List<String> clientTitleListOfMoviesRentByClient;
 
