@@ -1,10 +1,16 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Client;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutListIdAndAddress;
 import com.example.MovieShop.Services.ClientService;
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
@@ -31,19 +37,22 @@ class ClientControllerTest {
     }
 
     @Test
-    void getClientById() {
-
+    void shouldGetAllClient() {
+        //given
+        ClientService clientService = mock(ClientService.class);
+        given(clientService.getAllClients()).willReturn(getClientsList());
+        //when
+        List<ClientWithoutList> clients = clientService.getAllClients();
+        //then
+        assertEquals(clients, Matchers.notNullValue());
+        assertEquals(clients, Matchers.hasSize(3));
     }
 
-    @Test
-    void updateClientFirstAndLastName() {
-    }
-
-    @Test
-    void updateClientAddress() {
-    }
-
-    @Test
-    void deleteClient() {
+    private List<ClientWithoutList> getClientsList(){
+        List<ClientWithoutList> clients = new ArrayList<>();
+        clients.add(new ClientWithoutList(1L,"","",0,null,null));
+        clients.add(new ClientWithoutList(2L,"","",0,null,null));
+        clients.add(new ClientWithoutList(3L,"","",0,null,null));
+        return clients;
     }
 }
