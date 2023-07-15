@@ -3,7 +3,6 @@ package com.example.MovieShop.Services;
 import com.example.MovieShop.Exceptions.Client.ClientNotFoundException;
 import com.example.MovieShop.Objects.Address;
 import com.example.MovieShop.Objects.Client;
-import com.example.MovieShop.ObjectsDto.Address.AddressWithoutId;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithCountOfRent;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutAddressId;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
@@ -78,11 +77,6 @@ public class ClientService {
                 .clientLastName(clientWithoutList.getClientLastName())
                 .clientTitleListOfMoviesRentByClient(titleList)
                 .clientCountOfRent(client.getClientCountOfRent())
-                .addressWithoutId(AddressWithoutId.builder()
-                        .addressId(clientWithoutList.getAddress().getAddressId())
-                        .city(clientWithoutList.getAddress().getCity())
-                        .street(clientWithoutList.getAddress().getStreet())
-                        .build())
                 .build();
         log.info("Return Client by Id");
         return clientWithoutAddressId;
@@ -90,7 +84,7 @@ public class ClientService {
     public Client getClientById(Long id){
         return clientRepository.findById(id).orElseThrow(() -> new ClientNotFoundException(id));
     }
-    public ClientWithoutList updateFirstNameandLastNameOfClient(ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, Long id){
+    public ClientWithoutList updateFirstNameAndLastNameOfClient(ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, Long id){
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new ClientNotFoundException(id));
         List<String> movieTitles = new ArrayList<>();

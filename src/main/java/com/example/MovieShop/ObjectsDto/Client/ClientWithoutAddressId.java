@@ -16,6 +16,5 @@ public class ClientWithoutAddressId {
     private String clientFirstName;
     private String clientLastName;
     private int clientCountOfRent;
-    private AddressWithoutId addressWithoutId;
     private List<String> clientTitleListOfMoviesRentByClient;
 }

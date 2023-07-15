@@ -21,6 +21,7 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -35,6 +36,8 @@ public class MovieShopApplication implements CommandLineRunner {
     private final MovieService movieService;
     private final MovieRentService movieRentService;
 
+    public List<AddressWithoutId> allAddress = new ArrayList<>();
+    public List<ClientWithoutList> allClients = new ArrayList<>();
     public MovieShopApplication(ActorService actorService, AddressService addressService, ClientService clientService, MovieService movieService, MovieRentService movieRentService) {
         this.actorService = actorService;
         this.addressService = addressService;
@@ -49,6 +52,10 @@ public class MovieShopApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        createExampleData();
+    }
+
+    private void createExampleData() {
         log.info("-----------------------------------------------CREATING EXAMPLE DATA-----------------------------------------------");
         String[] arrayOfCities = {"Kraków", "Szczecin", "Bydgoszcz", "Lodz", "Radom", "Warszawa", "Gdansk", "Sopot", "Opole"
                 , "Poznań", "Lublin", "Białystok"};
@@ -62,7 +69,6 @@ public class MovieShopApplication implements CommandLineRunner {
         Random rand = new Random();
 
         for (int i = 0; i < 20; i++) {
-
             addressService.createAddress(AddressDto.builder()
                             .city(arrayOfCities[rand.nextInt(10)])
                             .street(arrayOfStreets[rand.nextInt(10)])
@@ -72,7 +78,6 @@ public class MovieShopApplication implements CommandLineRunner {
                     .clientFirstName(arrayOfClientFirstNames[rand.nextInt(10)])
                     .clientLastName(arrayOfClientLastName[rand.nextInt(10)])
                     .build());
-
             actorService.createNewActor(ActorWithoutIdAndListDto.builder()
                     .actorFirstName(arrayOfClientFirstNames[rand.nextInt(10)])
                     .actorLastName(arrayOfClientLastName[rand.nextInt(10)])
@@ -80,18 +85,11 @@ public class MovieShopApplication implements CommandLineRunner {
                     .build());
         }
 
-        List<AddressWithoutId> allAddress = addressService.getAllAddress();
-        List<ClientWithoutList> allClients = clientService.getAllClients();
-        for (int i = 0; i < allAddress.size(); i++) {
-            clientService.updateClientAddress(allAddress.get(i).getAddressId(),allClients.get(i).getClientId());
-        }
-
         Movie movie = movieService.createMovie(MovieWithoutIdAndList.builder()
                 .title("Ryzykowny Interes")
                 .review("Pod nieobecność rodziców nastolatek Joel poznaje kobietę lekkich obyczajów, Lanę, i za jej namową urządza w miejscu zamieszkania... dom publiczny.")
                 .movieGenres(MoviesGenres.COMEDY)
                 .build());
-        movieService.addActorToMovie(actorService.getActorById(2L).getActorId(), movie.getMovieId());
 
         movieRentService.createMovieRent(movie.getMovieId(), clientService.getClientWithoutListById(1L).getClientId());
 
@@ -100,10 +98,18 @@ public class MovieShopApplication implements CommandLineRunner {
                 .actorLastName("Williams")
                 .description("description")
                 .build();
+
+        allAddress = addressService.getAllAddress();
+        allClients = clientService.getAllClients();
+        for (int i = 0; i < allAddress.size(); i++) {
+            clientService.updateClientAddress(allAddress.get(i).getAddressId(),allClients.get(i).getClientId());
+        }
+
+        movieService.addActorToMovie(actorService.getActorById(2L).getActorId(), movie.getMovieId());
+
         actorService.updateActor(actorForUpdate, 1L);
 
         log.info("----------------------------------------END OF CREATING EXAMPLE DATA-----------------------------------------------");
-
     }
 
     @Bean
