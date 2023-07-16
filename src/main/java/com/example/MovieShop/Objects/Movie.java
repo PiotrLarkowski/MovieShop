@@ -2,11 +2,9 @@ package com.example.MovieShop.Objects;
 
 import javax.persistence.*;
 
-import com.example.MovieShop.ObjectsDto.Actor.ActorWithMovieTitleList;
 import lombok.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Builder
@@ -29,7 +27,7 @@ public class Movie {
     public void addActorToMovie(Actor actor){
         listOfActorsInMovie.add(actor);
     }
-    public void removeActorToMovie(Actor actor){
+    public void removeActorFromMovie(Actor actor){
         listOfActorsInMovie.remove(actor);
     }
 

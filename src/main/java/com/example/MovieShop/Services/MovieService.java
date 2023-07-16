@@ -3,8 +3,6 @@ package com.example.MovieShop.Services;
 import com.example.MovieShop.Exceptions.Movie.MovieNotFoundException;
 import com.example.MovieShop.Objects.Actor;
 import com.example.MovieShop.Objects.Movie;
-import com.example.MovieShop.Objects.MoviesGenres;
-import com.example.MovieShop.ObjectsDto.Movie.MovieDto;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
 import com.example.MovieShop.Repositorys.MovieRepository;
@@ -95,11 +93,16 @@ public class MovieService {
         return movieWithoutIdAndList;
     }
 
-    public Movie removeActorToMovie(Long actorId, Long movieId) {
+    public MovieWithoutIdAndList removeActorFromMovie(Long actorId, Long movieId) {
         Movie movieById = getMovieById(movieId);
-        movieById.removeActorToMovie(actorService.getActorById(actorId));
+        movieById.removeActorFromMovie(actorService.getActorById(actorId));
+        MovieWithoutIdAndList movieWithoutIdAndList = MovieWithoutIdAndList.builder()
+                .title(movieById.getTitle())
+                .review(movieById.getReview())
+                .movieGenres(movieById.getMovieGenres())
+                .build();
         log.info("Removing actor from movie");
-        return movieById;
+        return movieWithoutIdAndList;
     }
 
     public void deleteMovie(Long id) {
