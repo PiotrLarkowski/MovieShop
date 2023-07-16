@@ -21,7 +21,6 @@ public class Actor {
     private String actorFirstName;
     private String actorLastName;
     private String description;
-//    @OneToMany(mappedBy = "movieId")
     @ElementCollection(targetClass=String.class)
     private List<String> movieListActorAppeared;
 

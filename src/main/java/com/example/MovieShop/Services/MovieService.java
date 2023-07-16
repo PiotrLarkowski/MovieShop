@@ -3,6 +3,7 @@ package com.example.MovieShop.Services;
 import com.example.MovieShop.Exceptions.Movie.MovieNotFoundException;
 import com.example.MovieShop.Objects.Actor;
 import com.example.MovieShop.Objects.Movie;
+import com.example.MovieShop.ObjectsDto.Movie.MovieWithNamesOfActorsAppeared;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
 import com.example.MovieShop.Repositorys.MovieRepository;
@@ -93,16 +94,19 @@ public class MovieService {
         return movieWithoutIdAndList;
     }
 
-    public MovieWithoutIdAndList removeActorFromMovie(Long actorId, Long movieId) {
+    public MovieWithNamesOfActorsAppeared removeActorFromMovie(Long actorId, Long movieId) {
         Movie movieById = getMovieById(movieId);
         movieById.removeActorFromMovie(actorService.getActorById(actorId));
-        MovieWithoutIdAndList movieWithoutIdAndList = MovieWithoutIdAndList.builder()
+        actorService.getActorById(actorId).getMovieListActorAppeared().remove(movieById.getTitle());
+        MovieWithNamesOfActorsAppeared movieWithNamesOfActorsAppeared = MovieWithNamesOfActorsAppeared.builder()
+                .movieId(movieId)
                 .title(movieById.getTitle())
                 .review(movieById.getReview())
+                .listOfNamesActorsInMovie(movieById.getListOfNamesActorsInMovie())
                 .movieGenres(movieById.getMovieGenres())
                 .build();
         log.info("Removing actor from movie");
-        return movieWithoutIdAndList;
+        return movieWithNamesOfActorsAppeared;
     }
 
     public void deleteMovie(Long id) {

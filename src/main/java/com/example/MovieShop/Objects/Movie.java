@@ -12,23 +12,24 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long movieId;
     @OneToMany(mappedBy = "actorInMovieId")
     private List<Actor> listOfActorsInMovie;
+    @ElementCollection(targetClass=String.class)
+    private List<String> listOfNamesActorsInMovie;
     private String title;
     private String review;
     @Enumerated(EnumType.STRING)
     private MoviesGenres movieGenres;
 
     public void addActorToMovie(Actor actor){
-        listOfActorsInMovie.add(actor);
+        listOfNamesActorsInMovie.add(actor.getActorFirstName() + " " + actor.getActorLastName());
     }
     public void removeActorFromMovie(Actor actor){
-        listOfActorsInMovie.remove(actor);
+        listOfNamesActorsInMovie.remove(actor.getActorFirstName() + " " + actor.getActorLastName());
     }
 
     @Override

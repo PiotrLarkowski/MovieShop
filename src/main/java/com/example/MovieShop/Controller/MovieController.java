@@ -1,6 +1,7 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.Movie;
+import com.example.MovieShop.ObjectsDto.Movie.MovieWithNamesOfActorsAppeared;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
 import com.example.MovieShop.Services.MovieService;
@@ -40,7 +41,7 @@ public class MovieController {
         return movieService.addActorToMovie(actorId, movieId);
     }
     @PutMapping("/remove/{actorId}/{movieId}")
-    public MovieWithoutIdAndList removeActorToMovie(@PathVariable Long actorId, @PathVariable Long movieId){
+    public MovieWithNamesOfActorsAppeared removeActorToMovie(@PathVariable Long actorId, @PathVariable Long movieId){
         return movieService.removeActorFromMovie(actorId, movieId);
     }
     @DeleteMapping("/{id}")
