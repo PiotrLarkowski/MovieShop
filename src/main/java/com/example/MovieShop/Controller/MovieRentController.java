@@ -1,7 +1,8 @@
 package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.MovieRent;
-import com.example.MovieShop.ObjectsDto.MovieRentDto;
+import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentDto;
+import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToShow;
 import com.example.MovieShop.Services.MovieRentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +23,7 @@ public class MovieRentController {
         return(movieRentService.createMovieRent(movieId, clientId));
     }
     @GetMapping
-    public List<MovieRent> getAllMovieRent(){
+    public List<MovieRentToShow> getAllMovieRent(){
         return movieRentService.getAllMovieRent();
     }
     @GetMapping("{id}")

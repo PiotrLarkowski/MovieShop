@@ -1,4 +1,4 @@
-package com.example.MovieShop.ObjectsDto;
+package com.example.MovieShop.ObjectsDto.MovieRentDto;
 
 import com.example.MovieShop.Objects.Client;
 import com.example.MovieShop.Objects.Movie;
@@ -9,8 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class MovieRentDto {
     private Client clientRentId;
     private Movie movieRentId;
