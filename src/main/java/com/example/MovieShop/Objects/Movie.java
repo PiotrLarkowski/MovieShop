@@ -1,6 +1,8 @@
 package com.example.MovieShop.Objects;
 
 import javax.persistence.*;
+
+import com.example.MovieShop.ObjectsDto.Actor.ActorWithMovieTitleList;
 import lombok.*;
 
 import java.util.List;
