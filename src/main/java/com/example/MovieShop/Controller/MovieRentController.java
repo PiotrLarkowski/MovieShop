@@ -1,12 +1,9 @@
 package com.example.MovieShop.Controller;
 
-import com.example.MovieShop.Objects.MovieRent;
-import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentDto;
 import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToCreateDto;
 import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToShow;
 import com.example.MovieShop.Services.MovieRentService;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +19,10 @@ public class MovieRentController {
     @ResponseStatus(HttpStatus.CREATED)
     public MovieRentToCreateDto createMovieRent(@PathVariable Long movieId, @PathVariable Long clientId){
         return(movieRentService.createMovieRent(movieId, clientId));
+    }
+    @PutMapping(path="/{movieRentId}")
+    public MovieRentToShow changeTheReturnValueOfRent(@PathVariable Long movieRentId){
+        return(movieRentService.changeTheReturnValueOfRent(movieRentId));
     }
     @GetMapping
     public List<MovieRentToShow> getAllMovieRent(){

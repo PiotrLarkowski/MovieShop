@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import javax.persistence.ElementCollection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -125,4 +126,28 @@ public class MovieRentService {
         movieRentRepository.delete(movieRentRepository.findById(id).orElseThrow(() -> new MovieRentNotFoundException(id)));
     }
 
+    public MovieRentToShow changeTheReturnValueOfRent(Long movieId) {
+        MovieRent movieRent = movieRentRepository.findById(movieId).orElseThrow(() -> new MovieRentNotFoundException(movieId));
+        movieRent.changeReturnValue();
+        List<String> clientListOfMoviesRentByClient = new ArrayList<>();
+        movieRent.getClientRentId().getClientListOfMoviesRentByClient().forEach(movie -> clientListOfMoviesRentByClient.add(movie.getTitle()));
+        return MovieRentToShow.builder()
+                .clientWithoutList(ClientWithoutList.builder()
+                        .clientId(movieRent.getClientRentId().getClientId())
+                        .clientFirstName(movieRent.getClientRentId().getClientFirstName())
+                        .clientLastName(movieRent.getClientRentId().getClientLastName())
+                        .clientCountOfRent(movieRent.getClientRentId().getClientCountOfRent())
+                        .address(movieRent.getClientRentId().getAddress())
+                        .clientTitleListOfMoviesRentByClient(clientListOfMoviesRentByClient)
+                        .build())
+                .movieWithoutList(MovieWithoutList.builder()
+                        .movieId(movieRent.getMovieRentId().getMovieId())
+                        .title(movieRent.getMovieRentId().getTitle())
+                        .review(movieRent.getMovieRentId().getReview())
+                        .movieGenres(movieRent.getMovieRentId().getMovieGenres())
+                        .build()
+                )
+                .returned(movieRent.isReturned())
+                .build();
+    }
 }

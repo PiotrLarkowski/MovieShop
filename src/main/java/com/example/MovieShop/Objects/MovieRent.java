@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithNamesOfActorsAppeared;
+import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToShow;
 import lombok.*;
 
 @Entity
@@ -25,4 +26,13 @@ public class MovieRent {
     @JoinColumn(name = "movieId")
     private Movie movieRentId;
     private boolean returned;
+
+    public MovieRent changeReturnValue() {
+        if(returned){
+            returned = false;
+        }else{
+            returned = true;
+        }
+        return this;
+    }
 }
