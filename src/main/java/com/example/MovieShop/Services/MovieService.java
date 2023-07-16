@@ -55,14 +55,13 @@ public class MovieService {
     public List<MovieWithNamesOfActorsAppeared> getAllMovies() {
         List<Movie> movieList = new ArrayList<>();
         movieRepository.findAll().forEach(movieList::add);
-        List<String> movieListActorAppeared = new ArrayList<>();
-        movieList.forEach(movie -> movieListActorAppeared.add(movie.getListOfNamesActorsInMovie().toString()));
-        List<MovieWithNamesOfActorsAppeared> movieWithNamesOfActorsAppeared = movieList.stream().map(movie -> MovieWithNamesOfActorsAppeared.builder()
+        List<MovieWithNamesOfActorsAppeared> movieWithNamesOfActorsAppeared = new ArrayList<>();
+        movieWithNamesOfActorsAppeared = movieList.stream().map(movie -> MovieWithNamesOfActorsAppeared.builder()
                 .movieId(movie.getMovieId())
                 .title(movie.getTitle())
                 .review(movie.getReview())
                 .movieGenres(movie.getMovieGenres())
-                .listOfNamesActorsInMovie(movieListActorAppeared)
+                .listOfNamesActorsInMovie(movie.getListOfNamesActorsInMovie())
                 .build()
         ).collect(Collectors.toList());
         log.info("Returning all movies");
@@ -72,6 +71,7 @@ public class MovieService {
     public Movie getMovieById(Long id) {
         return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
+
     public MovieWithNamesOfActorsAppeared getMovieToSHowById(Long id) {
         Movie movie = movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
         List<String> movieListActorAppeared = new ArrayList<>(Collections.singletonList(movie.getListOfNamesActorsInMovie().toString()));
@@ -84,6 +84,7 @@ public class MovieService {
                 .build();
         return movieWithNamesOfActorsAppeared;
     }
+
     public Movie updateMovie(MovieWithoutIdAndList movieWithoutIdAndList, Long id) {
         Movie movieById = getMovieById(id);
         movieById.setListOfActorsInMovie(new ArrayList<>());
