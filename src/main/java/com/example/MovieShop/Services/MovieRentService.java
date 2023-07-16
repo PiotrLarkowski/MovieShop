@@ -99,13 +99,6 @@ public class MovieRentService {
                 .build();
         return movieRentToShow;
     }
-    public MovieRent updateMovieRent(@RequestBody @Validated MovieRentDto movieRentDto, @PathVariable Long id){
-        MovieRent movieRent = movieRentRepository.findById(id).orElseThrow(() -> new MovieRentNotFoundException(id));
-        movieRent.setClientRentId(movieRentDto.getClientRentId());
-        movieRent.setMovieRentId(movieRentDto.getMovieRentId());
-        movieRent.setReturned(movieRent.isReturned());
-        return movieRent;
-    }
     public void deleteMovieRentById(Long id){
         movieRentRepository.delete(movieRentRepository.findById(id).orElseThrow(() -> new MovieRentNotFoundException(id)));
     }

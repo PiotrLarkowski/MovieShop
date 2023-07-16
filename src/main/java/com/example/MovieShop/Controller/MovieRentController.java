@@ -30,10 +30,6 @@ public class MovieRentController {
     public MovieRentToShow getMovieRentById(@PathVariable Long id){
         return movieRentService.getMovieRentById(id);
     }
-    @PutMapping("{id}")
-    public MovieRent updateMovieRent(@RequestBody @Validated MovieRentDto movieRentDto, @PathVariable Long id){
-        return movieRentService.updateMovieRent(movieRentDto, id);
-    }
     @DeleteMapping("{id}")
     public void deleteMovieRent(@PathVariable Long id){
         movieRentService.deleteMovieRentById(id);
