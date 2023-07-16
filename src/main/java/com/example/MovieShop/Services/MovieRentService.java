@@ -3,9 +3,12 @@ package com.example.MovieShop.Services;
 import com.example.MovieShop.Exceptions.Client.ClientNotFoundException;
 import com.example.MovieShop.Exceptions.Movie.MovieNotFoundException;
 import com.example.MovieShop.Exceptions.MovieRent.MovieRentNotFoundException;
+import com.example.MovieShop.Objects.Address;
 import com.example.MovieShop.Objects.Client;
 import com.example.MovieShop.Objects.Movie;
 import com.example.MovieShop.Objects.MovieRent;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutAddressId;
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.MovieRentDto;
 import com.example.MovieShop.Repositorys.ClientRepository;
 import com.example.MovieShop.Repositorys.MovieRentRepository;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -48,7 +53,22 @@ public class MovieRentService {
     }
     public List<MovieRent> getAllMovieRent(){
         List<MovieRent> movieRentArrayList = new ArrayList<>();
-        movieRentRepository.findAll().forEach(movieRent -> movieRentArrayList.add(movieRent));
+        movieRentRepository.findAll().forEach(movieRentArrayList::add);
+        List<Client> listOfClients = new ArrayList<>();
+        movieRentArrayList.forEach(movieRent -> listOfClients.add(clientService.getClientById(movieRent.getClientRentId().getClientId())));
+        List<String> movieTitles = new ArrayList<>();
+        listOfClients.forEach(client -> client.getClientListOfMoviesRentByClient().forEach(movie-> movieTitles.add(movie.getTitle())));
+        List<ClientWithoutList> clientWithoutList = listOfClients.stream().map(client -> ClientWithoutList.builder()
+                .clientId(client.getClientId())
+                .clientFirstName(client.getClientFirstName())
+                .clientLastName(client.getClientLastName())
+                .clientCountOfRent(client.getClientCountOfRent())
+                .address(client.getAddress())
+                .clientTitleListOfMoviesRentByClient(movieTitles)
+                .build()).collect(Collectors.toList());
+        List<Movie> listOfMovies = new ArrayList<>();
+        movieRentArrayList.forEach(movieRent -> listOfMovies.add(movieService.getMovieById(movieRent.getMovieRentId().getMovieId())));
+
         return movieRentArrayList;
     }
     public MovieRent getMovieRentById(Long id){
