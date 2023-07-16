@@ -1,13 +1,12 @@
 package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.MovieRent.MovieRentNotFoundException;
-import com.example.MovieShop.Objects.Client;
-import com.example.MovieShop.Objects.Movie;
-import com.example.MovieShop.Objects.MovieRent;
-import com.example.MovieShop.Objects.MoviesGenres;
+import com.example.MovieShop.Objects.*;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
+import com.example.MovieShop.ObjectsDto.Movie.MovieWithNamesOfActorsAppeared;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
 import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentDto;
+import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToCreateDto;
 import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToShow;
 import com.example.MovieShop.Repositorys.MovieRentRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.persistence.ElementCollection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,9 +35,31 @@ public class MovieRentService {
         this.movieService = movieService;
     }
 
-    public MovieRent createMovieRent(Long movieId, Long clientId){
+    public MovieRentToCreateDto createMovieRent(Long movieId, Long clientId){
         Client client = clientService.getClientById(clientId);
+        List<String> listOfMovieRentByClient = new ArrayList<>();
+        client.getClientListOfMoviesRentByClient().forEach(movie -> listOfMovieRentByClient.add(movie.getTitle()));
+        ClientWithoutList clientWithoutList = ClientWithoutList.builder()
+                .clientId(client.getClientId())
+                .clientFirstName(client.getClientFirstName())
+                .clientLastName(client.getClientLastName())
+                .clientCountOfRent(client.getClientCountOfRent())
+                .address(client.getAddress())
+                .clientTitleListOfMoviesRentByClient(listOfMovieRentByClient)
+                .build();
         Movie movie = movieService.getMovieById(movieId);
+        MovieWithNamesOfActorsAppeared movieWithNamesOfActorsAppeared = MovieWithNamesOfActorsAppeared.builder()
+                .movieId(movie.getMovieId())
+                .listOfNamesActorsInMovie(movie.getListOfNamesActorsInMovie())
+                .title(movie.getTitle())
+                .review(movie.getReview())
+                .movieGenres(movie.getMovieGenres())
+                .build();
+        MovieRentToCreateDto movieRentToCreateDto = MovieRentToCreateDto.builder()
+                .clientRentId(clientWithoutList)
+                .movieRentId(movieWithNamesOfActorsAppeared)
+                .returned(false)
+                .build();
         MovieRent movieRent = MovieRent.builder()
                 .clientRentId(client)
                 .movieRentId(movie)
@@ -45,7 +67,7 @@ public class MovieRentService {
                 .build();
         movieRentRepository.save(movieRent);
         clientService.addClientCountOfBuyByOne(client.getClientId());
-        return movieRent;
+        return movieRentToCreateDto;
     }
     public List<MovieRentToShow> getAllMovieRent(){
         List<MovieRent> movieRentArrayList = new ArrayList<>();

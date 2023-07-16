@@ -1,6 +1,9 @@
 package com.example.MovieShop.Objects;
 
 import javax.persistence.*;
+
+import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
+import com.example.MovieShop.ObjectsDto.Movie.MovieWithNamesOfActorsAppeared;
 import lombok.*;
 
 @Entity

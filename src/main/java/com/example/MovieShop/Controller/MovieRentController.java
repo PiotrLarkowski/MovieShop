@@ -2,6 +2,7 @@ package com.example.MovieShop.Controller;
 
 import com.example.MovieShop.Objects.MovieRent;
 import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentDto;
+import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToCreateDto;
 import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToShow;
 import com.example.MovieShop.Services.MovieRentService;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class MovieRentController {
     }
     @PostMapping("/{movieId}/{clientId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public MovieRent createMovieRent(@PathVariable Long movieId, @PathVariable Long clientId){
+    public MovieRentToCreateDto createMovieRent(@PathVariable Long movieId, @PathVariable Long clientId){
         return(movieRentService.createMovieRent(movieId, clientId));
     }
     @GetMapping
