@@ -27,7 +27,7 @@ public class MovieRentController {
         return movieRentService.getAllMovieRent();
     }
     @GetMapping("{id}")
-    public MovieRent getMovieRentById(@PathVariable Long id){
+    public MovieRentToShow getMovieRentById(@PathVariable Long id){
         return movieRentService.getMovieRentById(id);
     }
     @PutMapping("{id}")

@@ -76,8 +76,28 @@ public class MovieRentService {
         }
         return movieRentToShow;
     }
-    public MovieRent getMovieRentById(Long id){
-        return movieRentRepository.findById(id).orElseThrow(() -> new MovieRentNotFoundException(id));
+    public MovieRentToShow getMovieRentById(Long id){
+        MovieRent movieRent = movieRentRepository.findById(id).orElseThrow(() -> new MovieRentNotFoundException(id));
+        List<String> movieListTitle = new ArrayList<>();
+        movieRent.getClientRentId().getClientListOfMoviesRentByClient().forEach(movie -> movieListTitle.add(movie.getTitle()));
+        MovieRentToShow movieRentToShow = MovieRentToShow.builder()
+                .clientWithoutList(ClientWithoutList.builder()
+                        .clientId(movieRent.getClientRentId().getClientId())
+                        .clientFirstName(movieRent.getClientRentId().getClientFirstName())
+                        .clientLastName(movieRent.getClientRentId().getClientLastName())
+                        .clientCountOfRent(movieRent.getClientRentId().getClientCountOfRent())
+                        .address(movieRent.getClientRentId().getAddress())
+                        .clientTitleListOfMoviesRentByClient(movieListTitle)
+                        .build())
+                .movieWithoutList(MovieWithoutList.builder()
+                        .movieId(movieRent.getMovieRentId().getMovieId())
+                        .title(movieRent.getMovieRentId().getTitle())
+                        .review(movieRent.getMovieRentId().getReview())
+                        .movieGenres(movieRent.getMovieRentId().getMovieGenres())
+                        .build())
+                .returned(movieRent.isReturned())
+                .build();
+        return movieRentToShow;
     }
     public MovieRent updateMovieRent(@RequestBody @Validated MovieRentDto movieRentDto, @PathVariable Long id){
         MovieRent movieRent = movieRentRepository.findById(id).orElseThrow(() -> new MovieRentNotFoundException(id));
