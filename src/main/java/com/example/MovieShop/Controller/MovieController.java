@@ -25,7 +25,7 @@ public class MovieController {
         return movieService.createMovie(movieWithoutIdAndList);
     }
     @GetMapping
-    public List<MovieWithoutList> getAllMovies(){
+    public List<MovieWithNamesOfActorsAppeared> getAllMovies(){
         return movieService.getAllMovies();
     }
     @GetMapping("/{id}")

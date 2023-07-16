@@ -51,18 +51,21 @@ public class MovieService {
         return movieWithoutList;
     }
 
-    public List<MovieWithoutList> getAllMovies() {
+    public List<MovieWithNamesOfActorsAppeared> getAllMovies() {
         List<Movie> movieList = new ArrayList<>();
         movieRepository.findAll().forEach(movieList::add);
-        List<MovieWithoutList> movieWithoutLists = movieList.stream().map(movie -> MovieWithoutList.builder()
+        List<String> movieListActorAppeared = new ArrayList<>();
+        movieList.forEach(movie -> movieListActorAppeared.add(movie.getListOfNamesActorsInMovie().toString()));
+        List<MovieWithNamesOfActorsAppeared> movieWithNamesOfActorsAppeared = movieList.stream().map(movie -> MovieWithNamesOfActorsAppeared.builder()
                 .movieId(movie.getMovieId())
                 .title(movie.getTitle())
                 .review(movie.getReview())
                 .movieGenres(movie.getMovieGenres())
+                .listOfNamesActorsInMovie(movieListActorAppeared)
                 .build()
         ).collect(Collectors.toList());
         log.info("Returning all movies");
-        return movieWithoutLists;
+        return movieWithNamesOfActorsAppeared;
     }
 
     public Movie getMovieById(Long id) {
