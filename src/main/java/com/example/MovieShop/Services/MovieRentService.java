@@ -4,7 +4,9 @@ import com.example.MovieShop.Exceptions.MovieRent.MovieRentNotFoundException;
 import com.example.MovieShop.Objects.Client;
 import com.example.MovieShop.Objects.Movie;
 import com.example.MovieShop.Objects.MovieRent;
+import com.example.MovieShop.Objects.MoviesGenres;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
+import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
 import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentDto;
 import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToShow;
 import com.example.MovieShop.Repositorys.MovieRentRepository;
@@ -62,8 +64,16 @@ public class MovieRentService {
                 .build()).collect(Collectors.toList());
         List<Movie> listOfMovies = new ArrayList<>();
         movieRentArrayList.forEach(movieRent -> listOfMovies.add(movieService.getMovieById(movieRent.getMovieRentId().getMovieId())));
-
+        List<MovieWithoutList> movieWithoutListCollection = listOfMovies.stream().map(movie -> MovieWithoutList.builder()
+                .movieId(movie.getMovieId())
+                .title(movie.getTitle())
+                .review(movie.getReview())
+                .movieGenres(movie.getMovieGenres())
+                .build()).collect(Collectors.toList());
         List<MovieRentToShow> movieRentToShow = new ArrayList<>();
+        for (int i = 0; i < movieWithoutListCollection.size(); i++) {
+            movieRentToShow.add(new MovieRentToShow(clientWithoutList.get(i),movieWithoutListCollection.get(i),movieRentArrayList.get(i).isReturned()));
+        }
         return movieRentToShow;
     }
     public MovieRent getMovieRentById(Long id){

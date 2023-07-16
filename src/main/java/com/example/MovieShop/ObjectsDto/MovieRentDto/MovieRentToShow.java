@@ -3,6 +3,7 @@ package com.example.MovieShop.ObjectsDto.MovieRentDto;
 import com.example.MovieShop.Objects.Client;
 import com.example.MovieShop.Objects.Movie;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
+import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
 import lombok.*;
 
 @Builder
@@ -12,6 +13,6 @@ import lombok.*;
 @Setter
 public class MovieRentToShow {
     private ClientWithoutList clientWithoutList;
-    private Movie movieRentId;
+    private MovieWithoutList movieWithoutList;
     private boolean returned;
 }
