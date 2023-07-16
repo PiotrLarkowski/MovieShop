@@ -87,6 +87,8 @@ public class ClientService {
     public ClientWithoutList updateFirstNameAndLastNameOfClient(ClientWithoutListIdAndAddress clientWithoutListIdAndAddress, Long id){
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new ClientNotFoundException(id));
+        client.setClientFirstName(clientWithoutListIdAndAddress.getClientFirstName());
+        client.setClientLastName(clientWithoutListIdAndAddress.getClientLastName());
         List<String> movieTitles = new ArrayList<>();
         client.getClientListOfMoviesRentByClient().forEach(Movie -> movieTitles.add(Movie.getTitle()));
         ClientWithoutList clientWithoutList = ClientWithoutList.builder()
