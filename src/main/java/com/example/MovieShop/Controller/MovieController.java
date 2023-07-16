@@ -29,8 +29,8 @@ public class MovieController {
         return movieService.getAllMovies();
     }
     @GetMapping("/{id}")
-    public MovieWithoutList getMovieById(@PathVariable Long id){
-        return movieService.getMovieWithoutListById(id);
+    public MovieWithNamesOfActorsAppeared getMovieById(@PathVariable Long id){
+        return movieService.getMovieToSHowById(id);
     }
     @PutMapping("/{id}")
     public Movie updateMovie(@RequestBody @Validated MovieWithoutIdAndList movieWithoutIdAndList, @PathVariable Long id){

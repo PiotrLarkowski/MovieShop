@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,7 +72,18 @@ public class MovieService {
     public Movie getMovieById(Long id) {
         return movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
     }
-
+    public MovieWithNamesOfActorsAppeared getMovieToSHowById(Long id) {
+        Movie movie = movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id));
+        List<String> movieListActorAppeared = new ArrayList<>(Collections.singletonList(movie.getListOfNamesActorsInMovie().toString()));
+        MovieWithNamesOfActorsAppeared movieWithNamesOfActorsAppeared = MovieWithNamesOfActorsAppeared.builder()
+                .movieId(movie.getMovieId())
+                .title(movie.getTitle())
+                .review(movie.getReview())
+                .movieGenres(movie.getMovieGenres())
+                .listOfNamesActorsInMovie(movieListActorAppeared)
+                .build();
+        return movieWithNamesOfActorsAppeared;
+    }
     public Movie updateMovie(MovieWithoutIdAndList movieWithoutIdAndList, Long id) {
         Movie movieById = getMovieById(id);
         movieById.setListOfActorsInMovie(new ArrayList<>());
