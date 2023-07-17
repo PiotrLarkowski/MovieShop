@@ -73,6 +73,10 @@ public class MovieRentService {
     public List<MovieRentToShow> getAllMovieRent(){
         List<MovieRent> movieRentArrayList = new ArrayList<>();
         movieRentRepository.findAll().forEach(movieRentArrayList::add);
+        return changeListOfMovieToShow(movieRentArrayList);
+    }
+
+    private List<MovieRentToShow> changeListOfMovieToShow(List<MovieRent> movieRentArrayList) {
         List<Client> listOfClients = new ArrayList<>();
         movieRentArrayList.forEach(movieRent -> listOfClients.add(clientService.getClientById(movieRent.getClientRentId().getClientId())));
         List<String> movieTitles = new ArrayList<>();
@@ -95,10 +99,11 @@ public class MovieRentService {
                 .build()).collect(Collectors.toList());
         List<MovieRentToShow> movieRentToShow = new ArrayList<>();
         for (int i = 0; i < movieWithoutListCollection.size(); i++) {
-            movieRentToShow.add(new MovieRentToShow(clientWithoutList.get(i),movieWithoutListCollection.get(i),movieRentArrayList.get(i).isReturned()));
+            movieRentToShow.add(new MovieRentToShow(clientWithoutList.get(i),movieWithoutListCollection.get(i), movieRentArrayList.get(i).isReturned()));
         }
         return movieRentToShow;
     }
+
     public MovieRentToShow getMovieRentById(Long id){
         MovieRent movieRent = movieRentRepository.findById(id).orElseThrow(() -> new MovieRentNotFoundException(id));
         List<String> movieListTitle = new ArrayList<>();
@@ -149,5 +154,19 @@ public class MovieRentService {
                 )
                 .returned(movieRent.isReturned())
                 .build();
+    }
+
+    public List<MovieRentToShow> getAllNotReturnedMovieRent() {
+        List<MovieRent> movieRentArrayList = new ArrayList<>();
+        movieRentRepository.findAll().forEach(movieRentArrayList::add);
+        List<MovieRent> movieRentList = movieRentArrayList.stream().filter(movieRent -> !movieRent.isReturned()).collect(Collectors.toList());
+        return changeListOfMovieToShow(movieRentList);
+    }
+
+    public List<MovieRentToShow> getAllReturnedMovieRent() {
+        List<MovieRent> movieRentArrayList = new ArrayList<>();
+        movieRentRepository.findAll().forEach(movieRentArrayList::add);
+        List<MovieRent> movieRentList =movieRentArrayList.stream().filter(MovieRent::isReturned).collect(Collectors.toList());;
+        return changeListOfMovieToShow(movieRentList);
     }
 }

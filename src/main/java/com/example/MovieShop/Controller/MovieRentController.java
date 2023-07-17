@@ -28,7 +28,15 @@ public class MovieRentController {
     public List<MovieRentToShow> getAllMovieRent(){
         return movieRentService.getAllMovieRent();
     }
-    @GetMapping("{id}")
+    @GetMapping("/notReturned")
+    public List<MovieRentToShow> getAllNotReturnedMovieRent(){
+        return movieRentService.getAllNotReturnedMovieRent();
+    }
+    @GetMapping("/returned")
+    public List<MovieRentToShow> getAllReturnedMovieRent(){
+        return movieRentService.getAllReturnedMovieRent();
+    }
+    @GetMapping("/{id}")
     public MovieRentToShow getMovieRentById(@PathVariable Long id){
         return movieRentService.getMovieRentById(id);
     }
