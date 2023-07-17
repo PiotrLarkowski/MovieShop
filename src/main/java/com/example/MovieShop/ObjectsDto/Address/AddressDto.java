@@ -7,8 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class AddressDto {
     private String city;
     private String street;

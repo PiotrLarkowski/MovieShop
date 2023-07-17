@@ -1,7 +1,5 @@
 package com.example.MovieShop.ObjectsDto.Client;
 
-import com.example.MovieShop.Objects.Address;
-import com.example.MovieShop.ObjectsDto.Address.AddressWithoutId;
 import lombok.*;
 
 import java.util.List;

@@ -11,8 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,25 +1,19 @@
 package com.example.MovieShop.Services;
 
+import com.example.MovieShop.Exceptions.Client.ClientNotFoundException;
 import com.example.MovieShop.Exceptions.MovieRent.MovieRentNotFoundException;
 import com.example.MovieShop.Objects.*;
 import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithNamesOfActorsAppeared;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
-import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentDto;
 import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToCreateDto;
 import com.example.MovieShop.ObjectsDto.MovieRentDto.MovieRentToShow;
 import com.example.MovieShop.Repositorys.MovieRentRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import javax.persistence.ElementCollection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -127,8 +121,13 @@ public class MovieRentService {
                 .build();
         return movieRentToShow;
     }
-    public void deleteMovieRentById(Long id){
-        movieRentRepository.delete(movieRentRepository.findById(id).orElseThrow(() -> new MovieRentNotFoundException(id)));
+    public void deleteMovieRentById(Long movieRentId){
+        MovieRent movieRent = movieRentRepository.findById(movieRentId).orElseThrow(() -> new MovieRentNotFoundException(movieRentId));
+        Long clientId = movieRentRepository.findById(movieRentId).orElseThrow(() -> new ClientNotFoundException(0)).getClientRentId().getClientId();
+        clientService.lowerClientCountOfBuyByOne(clientId);
+        Client clientById = clientService.getClientById(clientId);
+        clientById.getClientListOfMoviesRentByClient().remove(movieRent.getMovieRentId());
+        movieRentRepository.delete(movieRent);
     }
 
     public MovieRentToShow changeTheReturnValueOfRent(Long movieId) {

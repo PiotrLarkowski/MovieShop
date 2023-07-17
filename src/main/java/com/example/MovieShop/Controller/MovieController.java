@@ -3,7 +3,6 @@ package com.example.MovieShop.Controller;
 import com.example.MovieShop.Objects.Movie;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithNamesOfActorsAppeared;
 import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutIdAndList;
-import com.example.MovieShop.ObjectsDto.Movie.MovieWithoutList;
 import com.example.MovieShop.Services.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;

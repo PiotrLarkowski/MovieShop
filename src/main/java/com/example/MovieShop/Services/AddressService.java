@@ -4,7 +4,6 @@ import com.example.MovieShop.Exceptions.Address.AddressNotFoundException;
 import com.example.MovieShop.Objects.Client;
 import com.example.MovieShop.ObjectsDto.Address.AddressDto;
 import com.example.MovieShop.ObjectsDto.Address.AddressWithoutId;
-import com.example.MovieShop.ObjectsDto.Client.ClientWithoutList;
 import com.example.MovieShop.Repositorys.AddressRepository;
 import com.example.MovieShop.Repositorys.ClientRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -41,14 +40,6 @@ public class AddressService {
         log.info("Address has been created");
         addressRepository.save(address);
         return address;
-    }
-
-    public void updateAddress(AddressDto addressDto, long id) {
-        Address address = addressRepository.findById(id)
-                .orElseThrow(() -> new AddressNotFoundException(id));
-        address.setCity(address.getCity());
-        address.setStreet(addressDto.getStreet());
-        log.info("Address has been updated");
     }
 
     public List<AddressWithoutId> getAllAddress() {

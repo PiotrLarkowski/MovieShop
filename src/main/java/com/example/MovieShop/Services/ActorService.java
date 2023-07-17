@@ -2,7 +2,6 @@ package com.example.MovieShop.Services;
 
 import com.example.MovieShop.Exceptions.Actor.ActorNotFoundException;
 import com.example.MovieShop.Objects.Actor;
-import com.example.MovieShop.Objects.Movie;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithoutIdAndListDto;
 import com.example.MovieShop.ObjectsDto.Actor.ActorWithMovieTitleList;
 import com.example.MovieShop.Repositorys.ActorRepository;
@@ -51,7 +50,6 @@ public class ActorService {
                         .actorLastName(actorInList.getActorLastName())
                         .actorDescription(actorInList.getDescription())
                         .actorMovieTitleAppearedList(actorInList.getMovieListActorAppeared())
-//                        .actorMovieTitleAppearedList(actorInList.getMovieListActorAppeared().stream().map(Movie::getTitle).collect(Collectors.toList()))
                         .build())
                 .collect(Collectors.toList());
         log.info("All actors has been shown");
@@ -61,8 +59,6 @@ public class ActorService {
     public ActorWithMovieTitleList getActorByIdWithoutList(@PathVariable Long id){
         log.info("Actor has been shown");
         Actor actor = actorRepository.findById(id).orElseThrow(() -> new ActorNotFoundException(id));
-//        List<String> listOfMovieActorAppeared = new ArrayList<>();
-//        actor.getMovieListActorAppeared().forEach(movie -> listOfMovieActorAppeared.add(movie.getTitle()));
         return ActorWithMovieTitleList.builder()
                 .actorId(actor.getActorId())
                 .actorFirstName(actor.getActorFirstName())

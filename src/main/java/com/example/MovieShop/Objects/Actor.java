@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
 public class Actor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

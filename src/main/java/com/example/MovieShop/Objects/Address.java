@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

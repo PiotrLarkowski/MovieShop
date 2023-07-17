@@ -13,8 +13,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class MovieRent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

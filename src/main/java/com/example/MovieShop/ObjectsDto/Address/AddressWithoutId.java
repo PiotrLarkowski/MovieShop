@@ -7,8 +7,6 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
 public class AddressWithoutId {
     private Long addressId;
     private String city;
